@@ -1,5 +1,8 @@
 1. Description of project
 2. Requirements (business purpose, problems trying to solve, what questions will we answer)
+  what are the most popular subjects
+  who are the most popular tutors
+  what time intervals are tutors most needed
 3. Assumptions
 4. Scope (what data will be captured)
 5. Design approach (high level logical groups and relations)
