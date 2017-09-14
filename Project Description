@@ -1,8 +1,43 @@
 1. Description of project
+  The platform to be built will serve as a channel between students and tutors. They will be able to set their avalability to arrange personalized services by utilizing the database. Also, textbooks will be rented to students, and they will be able to find the cheapeset and fastest renting or buying options using the database.
+    
 2. Requirements (business purpose, problems trying to solve, what questions will we answer)
-  what are the most popular subjects
-  who are the most popular tutors
-  what time intervals are tutors most needed
+  Business Purpose:
+    To build a platform for textbook rental and sales, as well as online tutoring. 
+    Tutors are hired and paid hourly
+    Revenue comes from selling/renting books and students paying membership fees to get tutoring, or advertising
+  Problems to solve:
+    High cost of textbooks
+    Students being not able to get extra help for their courses
+  Questions to Answer:
+    what are the most popular subjects
+    who are the most popular tutors
+    what time intervals are tutors most needed
+    what time intervals have excess of students/tutors
+    what are the most popular textbooks
+    how long should each appointment time lost
+
 3. Assumptions
+  One tutor/student uses one account only
+  Tutoring limited to only practical subjects (cannot help with field work, lab procedures, etc.)
+  All hired tutors are professional enough to anwser any on-topic question
+  the project will not go bankrupt
+  
 4. Scope (what data will be captured)
+  All Users:
+    Personal, contact, address, and billing information
+    Degree level
+    Academic information
+    avalability
+    language preferences
+  Students only:
+    Subjects that need help with
+  TextBooks:
+    Stocking information
+    Demand, supply, pricing
+    shipping information
+
 5. Design approach (high level logical groups and relations)
+  For all users, login (email) will be used as key
+  user(userName, userType, personalInfo, address and billing, language, ...)
+  textbook(name, ISBN, author, edition, price, stockAmount)
