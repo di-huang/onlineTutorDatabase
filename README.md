@@ -1,3 +1,4 @@
-# DB-Group6 <br /> `Donny Dong`  `Dat Hong`  `Di Huang`
+# DB-Group6 <br /> 
+# <text font-size="7"> `Donny Dong`  `Dat Hong`  `Di Huang` </text>
 
 
