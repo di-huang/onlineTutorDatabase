@@ -33,13 +33,13 @@ We are assuming that each customer only has one account and no events occuring a
 
 ## Project Scope
 ### In scope
-The data to be captured: for all users, we will track the info about personal setting, contact, address, billing info, degree level, academic info, language preferences and so on; for student only, we will track the subjects who need help; for textbooks, we will track stocking info, demand, supply, price and shipping info.
+Tutor & student data, book data, textbook solutions data, question data and subject data. For example, if a student is renting/buying a book, the database will track which book he/she needs, price data and due date of rented books. If a student is requesting a textbook solutions, the database will track which textbook it is and if the student has the membership. 
 ### Out of scope
+All economic and financial data, such as operational costs, revenue and so on; all random and unpredictable situations, such as running status of the server...
 ## Design Approach
 For all users, login (email) will be used as key  
-- `User`: userName, userType, personalInfo, address and billing, language, ...  
-- `Textbook`: name, ISBN, author, edition, price, stockAmount  
-
-
-
-
+- `Tutor`: __tutorName__, degree, majors, ratings, reviews and isWorking.
+- `Student`: __username__, personalInfo, address and credit card info.
+- `Textbook`: __bookID__, book_name, ISBN, author, edition, price and stockAmount.
+- `Request`: __requestID__, date and requestType.
+- `Order`: __orderID__, order history and costs.
