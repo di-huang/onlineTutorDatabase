@@ -1,5 +1,5 @@
-# DB-Group6
-Group Members: &nbsp; `Donny Dong` &nbsp; `Dat Hong` &nbsp; `Di Huang`
+# Project Description
+Group 6: &nbsp; `Donny Dong` &nbsp; `Dat Hong` &nbsp; `Di Huang`
 
 - [Description](#description)
 - [Requirements](#requirements)
@@ -13,7 +13,7 @@ Group Members: &nbsp; `Donny Dong` &nbsp; `Dat Hong` &nbsp; `Di Huang`
 - [Design Approach](#design-approach)
 
 ## Description
-Chegg is a company that provides textbook rentals. If people want to rent/buy the textbooks online, they will be able to find the cheapest and fastest renting/buying options using this platform. It also serves as a channel between students and tutors, which means students can ask tutors for homework questions through it.
+_Teaching Resource Database_: The database we are building is a simulation of Chegg database. Chegg is a company that provides online textbook rentals and tutoring services. People are able to find the cheapest and fastest renting or buying options using this platform. It also serves as a channel between students and tutors, for example, students can ask tutors for homework help through it. Event Tracking for this database: which students are requesting what services; which students have the membership; which tutors are working on tutoring; Inventory and sales/rentals volume of textbooks and due date of rented books.
 
 ## Requirements
 ### The business purpose
@@ -26,10 +26,10 @@ High cost of textbooks; students being not able to get extra help for their cour
 - What time intervals are tutors most needed?  
 - What time intervals have excess of students/tutors?  
 - What are the most popular textbooks?  
-- How long should each appointment time lost?  
+- How long should each appointment time last?  
 
 ## Assumptions
-We are assuming that each customer only has one account and no events occuring at the same time. Tutoring limited to only practical subjects (cannot help with field work, lab procedures and so on). All hired tutors are professional enough to anwser any on-topic question.
+We are assuming that each customer only has one account and no events occuring at the same time. Tutoring is limited to only practical subjects (cannot help with field work, lab procedures and so on). All hired tutors are professional enough to anwser any on-topic question. Only students request services (rent/buy textbooks, ask for homework help and so on).
 
 ## Project Scope
 ### In scope
