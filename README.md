@@ -35,9 +35,9 @@ We are assuming that each customer only has one account and no events occuring a
 ### In scope
 Tutor & student data, book data, textbook solutions data, question data and subject data. For example, if a student is renting/buying a book, the database will track which book he/she needs, price data and due date of rented books. If a student is requesting a textbook solutions, the database will track which textbook it is and if the student has the membership. 
 ### Out of scope
-All economic and financial data, such as operational costs, revenue and so on; all random and unpredictable situations, such as running status of the server...
+All economic and financial data, such as operational costs, revenue and so on; all random and unpredictable situations, such as running status of the server.
+
 ## Design Approach
-For all users, login (email) will be used as key  
 - `Tutor`: __tutorName__, degree, majors, ratings, reviews and isWorking.
 - `Student`: __username__, personalInfo, address and credit card info.
 - `Textbook`: __bookID__, book_name, ISBN, author, edition, price and stockAmount.
