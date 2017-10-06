@@ -43,3 +43,7 @@ All economic and financial data, such as operational costs, revenue and so on; a
 - `Textbook`: __bookID__, book_name, ISBN, author, edition, price and stockAmount.
 - `Request`: __requestID__, date and requestType.
 - `Order`: __orderID__, order history and costs.
+
+## ER Model
+![alt text](https://github.com/r2dong/DB-Group6/blob/master/di-huang/ERModel.png)
+
