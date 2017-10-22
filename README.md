@@ -45,5 +45,5 @@ All economic and financial data, such as operational costs, revenue and so on; a
 - `Order`: __orderID__, order history and costs.
 
 ## ER Model
-![alt text](https://github.com/r2dong/DB-Group6/blob/master/di-huang/ERModel.png)
+![alt text](https://github.com/r2dong/DB-Group6/blob/master/r2dong/ERModel2.png)
 
