@@ -20,13 +20,13 @@ create table student (
 );
 
 -- orders made by students
-DROP TABLE IF EXISTS order;
-create table order (
+DROP TABLE IF EXISTS orders;
+create table orders (
 	orderID VARCHAR(16) NOT NULL,
 	studentID VARCHAR(16) NOT NULL,
 	cardNo VARCHAR(16),
 	itemType VARCHAR(16),
-	orderDate SMALL-DATE-TIME,
+	orderDate DATETIME,
 	orderTotal DOUBLE,
 	orderStatus VARCHAR(16),
 	PRIMARY KEY (orderID),
@@ -38,7 +38,7 @@ DROP TABLE IF EXISTS payment;
 create table payment (
 	cardNo VARCHAR(16) NOT NULL,
 	studentID VARCHAR(16) NOT NULL,
-	expDate SMALL-DATE-TIME NOT NOT NULL,
+	expDate DATETIME NOT NULL,
 	CSC VARCHAR(3) NOT NULL,
 	PRIMARY KEY (cardNo),
 	FOREIGN KEY (studentID) REFERENCES student(studentID) ON DELETE CASCADE
@@ -52,10 +52,10 @@ create table bookOrdered (
 	quantiy INTEGER,
 	price DOUBLE,
 	description VARCHAR(10),
-	dueDate SMALL-DATE-TIME,
-	arrivalDate SMALL-DATE-TIME,
-	PRIMARY KEY (orderID),
-	FOREIGN KEY (ISBN) REFERENCES book(ISBN),
+	dueDate DATETIME,
+	arrivalDate DATETIME,
+	FOREIGN KEY (orderID) REFERENCES orders(orderID),
+	FOREIGN KEY (ISBN) REFERENCES book(ISBN)
 );
 
 -- relation that connects bookOrdered and bookSeller
