@@ -6,6 +6,11 @@ USE db_rdong6
 -- Address 128
 -- email 32
 
+-- disable checking foreign keys so we could delete tables conviniently
+SET FOREIGN_KEY_CHECKS = 0; 
+-- DROP TABLE IF EXISTS student, orders, payment, bookOrdered, bookSoldBy, bookSeller, book, findsSolution, textBookSolution, textBookSolutionGivenBy, questions, questionAnsweredBy, expertAnswerReviews, expertAnswerGivenBy, expertAnswer, tutor; 
+
+
 -- students using Chegg
 DROP TABLE IF EXISTS student;
 create table student (
@@ -63,10 +68,10 @@ DROP TABLE IF EXISTS bookSoldBy;
 create table bookSoldBy (
 	ISBN VARCHAR(13) NOT NULL,
 	sellerID VARCHAR(16) NOT NULL,
-	PRIMARY KEY (ISBN, sellerID)
+	PRIMARY KEY (ISBN, sellerID),
 	FOREIGN KEY (ISBN) REFERENCES book(ISBN) ON DELETE CASCADE,
 	FOREIGN KEY (sellerID) REFERENCES bookSeller(sellerID) ON DELETE CASCADE
-)
+);
 
 -- information about seller of the book
 DROP TABLE IF EXISTS bookSeller;
@@ -88,12 +93,23 @@ create table book (
 	PRIMARY KEY (ISBN)
 );
 
+-- questions asked by students
+DROP TABLE IF EXISTS questions;
+create table questions (
+	questionID VARCHAR(16) NOT NULL,
+	studentID VARCHAR(16) NOT NULL,
+	questionSubject VARCHAR(16),
+	questionContent VARCHAR(1000) NOT NULL,
+	PRIMARY KEY (questionID),
+	FOREIGN KEY (studentID) REFERENCES student(studnetID) ON DELETE CASCADE
+);
+
 -- questions student are looking for
 DROP TABLE IF EXISTS findsSolution;
 create table findsSolution ( 
 	studentID VARCHAR(32) NOT NULL,
 	questionNo Integer NOT NULL,
-	foundSolutionDate DATE,
+	foundSolutionDate DATE NOT NULL,
 	PRIMARY KEY (studentID, questionNo),
 	FOREIGN KEY (studentID) REFERENCES student(studentID) ON DELETE CASCADE,
 	FOREIGN KEY (questionNo) REFERENCES textbookSolution(questionNo) ON DELETE CASCADE	
@@ -119,17 +135,6 @@ create table textBookSolutionGivenBy (
 	FOREIGN KEY (ISBN) REFERENCES book(ISBN) ON DELETE CASCADE,
 	FOREIGN KEY (questionNo) REFERENCES questions(questionNo) ON DELETE CASCADE,
 	FOREIGN KEY (tutorID) REFERENCES tutor(tutorID) ON DELETE CASCADE
-);
-
--- questions asked by students
-DROP TABLE IF EXISTS questions;
-create table questions (
-	questionID VARCHAR(16) NOT NULL,
-	studentID VARCHAR(16) NOT NULL,
-	questionSubject VARCHAR(16),
-	questionContent VARCHAR(1000) NOT NULL,
-	PRIMARY KEY (questionID),
-	FOREIGN KEY (studentID) REFERENCES student(studnetID) ON DELETE CASCADE
 );
 
 -- information on tutors who answer a question
@@ -190,6 +195,9 @@ create table tutor (
 	PRIMARY KEY (tutorID),
 );
  
+-- restart foreign key checks
+SET FOREIGN_KEY_CHECKS = 1;
+
 -- sample data for student table
 INSERT INTO student (studentID, studentName, phoneNo, studentAddress, studentEmail, plan, fee) VALUES (111111, "Jack", 8581111111, "122 Jack Road", "Jack@jack.edu", "monthly", 100)
 
