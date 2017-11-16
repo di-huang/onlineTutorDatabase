@@ -142,12 +142,12 @@ create table findsSolution (
 DROP TABLE IF EXISTS textBookSolutionGivenBy;
 create table textBookSolutionGivenBy ( 
 	ISBN VARCHAR(13) NOT NULL, 
-	questionNo Integer NOT NULL, 
+	questionNo INTEGER NOT NULL, 
 	tutorID VARCHAR(16) NOT NULL,
 	PRIMARY KEY (ISBN, questionNo, tutorID),
 	FOREIGN KEY (ISBN) REFERENCES book(ISBN) ON DELETE CASCADE,
-	FOREIGN KEY (questionNo) REFERENCES textbookSolution(questionNo) ON DELETE CASCADE,
-	FOREIGN KEY (tutorID) REFERENCES tutor(tutorID) ON DELETE CASCADE
+	FOREIGN KEY (tutorID) REFERENCES tutor(tutorID) ON DELETE CASCADE,
+	FOREIGN KEY (questionNo) REFERENCES textbookSolution(questionNo) ON DELETE CASCADE
 );
 
 -- information on tutors who answer a question
