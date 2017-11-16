@@ -101,13 +101,13 @@ create table questions (
 	questionSubject VARCHAR(16),
 	questionContent VARCHAR(1000) NOT NULL,
 	PRIMARY KEY (questionID),
-	FOREIGN KEY (studentID) REFERENCES student(studnetID) ON DELETE CASCADE
+	FOREIGN KEY (studentID) REFERENCES student(studentID) ON DELETE CASCADE
 );
 
 -- questions student are looking for
 DROP TABLE IF EXISTS findsSolution;
 create table findsSolution ( 
-	studentID VARCHAR(32) NOT NULL,
+	studentID VARCHAR(16) NOT NULL,
 	questionNo Integer NOT NULL,
 	foundSolutionDate DATE NOT NULL,
 	PRIMARY KEY (studentID, questionNo),
@@ -147,29 +147,6 @@ create table questionAnsweredBy (
 	FOREIGN KEY (questionID) REFERENCES questions(questionID) ON DELETE CASCADE 
 );
 
--- reviews of expert answers
-DROP TABLE IF EXISTS expertAnswerReviews;
-create table expertAnswerReviews ( 
-	answerID VARCHAR(16) NOT NULL,
-	question ID VARCHAR(16) NOT NULL,
-	studentID VARCHAR(16) NOT NULL,
-	review_content VARCHAR(1000) NOT NULL,
-	PRIMARY KEY (studentID, questionID, answerID),
-	FOREIGN KEY (studentID) REFERENCES student(studentID) ON DELETE CASCADE,
-	FOREIGN KEY (questionID) REFERENCES questions(questionID) ON DELETE CASCADE,
-	FOREIGN KEY (answerID) REFERENCES expertAnswer(answerID) ON DELETE CASCADE,
-);
-
--- relation between expert answers and tutors
-DROP TABLE IF EXISTS expertAnswersGivenBy;
-create table expertAnswerGivenBy (
-	questionID VARCHAR(16) NOT NULL,
-	tutorID VARCHAR(16) NOT NULL,
-	PRIMARY KEY (questionID, tutorId),
-	FOREIGN KEY (questionID) REFERENCES questions(questionID) ON DELETE CASCADE,
-	FOREIGN KEY (tutorID) REFERENCES tutor(tutorID) ON DELETE CASCADE,
-);	
-
 DROP TABLE IF EXISTS expertAnswer;
 create table expertAnswer ( 
 	answerID VARCHAR(16) NOT NULL, 
@@ -192,13 +169,36 @@ create table tutor (
 	idle Boolean NOT NULL,
 	degree VARCHAR(32),
 	majors VARCHAR(32),
-	PRIMARY KEY (tutorID),
+	PRIMARY KEY (tutorID)
 );
  
+-- reviews of expert answers
+DROP TABLE IF EXISTS expertAnswerReviews;
+create table expertAnswerReviews ( 
+	answerID VARCHAR(16) NOT NULL,
+	questionID VARCHAR(16) NOT NULL,
+	studentID VARCHAR(16) NOT NULL,
+	reviewContent VARCHAR(1000) NOT NULL,
+	PRIMARY KEY (studentID, questionID, answerID),
+	FOREIGN KEY (studentID) REFERENCES student(studentID) ON DELETE CASCADE,
+	FOREIGN KEY (questionID) REFERENCES questions(questionID) ON DELETE CASCADE,
+	FOREIGN KEY (answerID) REFERENCES expertAnswer(answerID) ON DELETE CASCADE
+);
+
+-- relation between expert answers and tutors
+DROP TABLE IF EXISTS expertAnswerGivenBy;
+create table expertAnswerGivenBy (
+	questionID VARCHAR(16) NOT NULL,
+	tutorID VARCHAR(16) NOT NULL,
+	PRIMARY KEY (questionID, tutorId),
+	FOREIGN KEY (questionID) REFERENCES questions(questionID) ON DELETE CASCADE,
+	FOREIGN KEY (tutorID) REFERENCES tutor(tutorID) ON DELETE CASCADE
+);	
+
 -- restart foreign key checks
 SET FOREIGN_KEY_CHECKS = 1;
 
 -- sample data for student table
-INSERT INTO student (studentID, studentName, phoneNo, studentAddress, studentEmail, plan, fee) VALUES (111111, "Jack", 8581111111, "122 Jack Road", "Jack@jack.edu", "monthly", 100)
+INSERT INTO student (studentID, studentName, studentPhoneNo, studentAddress, studentEmail, plan, fee) VALUES (111111, "Jack", 8581111111, "122 Jack Road", "Jack@jack.edu", "monthly", 100)
 
 
