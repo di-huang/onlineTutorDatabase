@@ -8,8 +8,8 @@ USE db_rdong6
 
 -- disable checking foreign keys so we could delete tables conviniently
 SET FOREIGN_KEY_CHECKS = 0; 
--- DROP TABLE IF EXISTS student, orders, payment, bookOrdered, bookSoldBy, bookSeller, book, findsSolution, textBookSolution, textBookSolutionGivenBy, questions, questionAnsweredBy, expertAnswerReviews, expertAnswerGivenBy, expertAnswer, tutor; 
-
+DROP TABLE IF EXISTS student, orders, payment, bookOrdered, bookSoldBy, bookSeller, book, findsSolution, textbookSolution, textbookSolutionGivenBy, questions, questionAnsweredBy, expertAnswerReviews, expertAnswerGivenBy, expertAnswer, tutor; 
+SET FOREIGN_kEY_CHECKS = 1;
 
 -- students using Chegg
 DROP TABLE IF EXISTS student;
@@ -22,6 +22,38 @@ create table student (
 	plan VARCHAR(8),
 	fee DOUBLE,
 	PRIMARY KEY (studentID)
+);
+
+-- information about books for sell and rental
+DROP TABLE IF EXISTS book;
+create table book (
+	ISBN VARCHAR(13) NOT NULL,
+	bookName VARCHAR(64),
+	author VARCHAR(16),
+	publisher VARCHAR(64),
+	edition Integer,
+	PRIMARY KEY (ISBN)
+);
+
+-- information about seller of the book
+DROP TABLE IF EXISTS bookSeller;
+create table bookSeller (
+	sellerID VARCHAR(16) NOT NULL, 
+	sellerAddress VARCHAR(64),
+	sellerName VARCHAR(16),
+	PRIMARY KEY (sellerID)
+);
+
+DROP TABLE IF EXISTS tutor;
+create table tutor (
+	tutorID VARCHAR(16) NOT NULL, 
+	tutorName VARCHAR(32) NOT NULL,
+	totalLike Integer NOT NULL,
+	totalDisLike Integer NOT NULL,
+	idle Boolean NOT NULL,
+	degree VARCHAR(32),
+	majors VARCHAR(32),
+	PRIMARY KEY (tutorID)
 );
 
 -- orders made by students
@@ -73,25 +105,6 @@ create table bookSoldBy (
 	FOREIGN KEY (sellerID) REFERENCES bookSeller(sellerID) ON DELETE CASCADE
 );
 
--- information about seller of the book
-DROP TABLE IF EXISTS bookSeller;
-create table bookSeller (
-	sellerID VARCHAR(16) NOT NULL, 
-	sellerAddress VARCHAR(64),
-	sellerName VARCHAR(16),
-	PRIMARY KEY (sellerID)
-);
-
--- information about books for sell and rental
-DROP TABLE IF EXISTS book;
-create table book (
-	ISBN VARCHAR(13) NOT NULL,
-	bookName VARCHAR(64),
-	author VARCHAR(16),
-	publisher VARCHAR(64),
-	edition Integer,
-	PRIMARY KEY (ISBN)
-);
 
 -- questions asked by students
 DROP TABLE IF EXISTS questions;
@@ -104,17 +117,6 @@ create table questions (
 	FOREIGN KEY (studentID) REFERENCES student(studentID) ON DELETE CASCADE
 );
 
--- questions student are looking for
-DROP TABLE IF EXISTS findsSolution;
-create table findsSolution ( 
-	studentID VARCHAR(16) NOT NULL,
-	questionNo Integer NOT NULL,
-	foundSolutionDate DATE NOT NULL,
-	PRIMARY KEY (studentID, questionNo),
-	FOREIGN KEY (studentID) REFERENCES student(studentID) ON DELETE CASCADE,
-	FOREIGN KEY (questionNo) REFERENCES textbookSolution(questionNo) ON DELETE CASCADE	
-); 
-
 -- solution of textbooks
 DROP TABLE IF EXISTS textbookSolution;
 create table textbookSolution ( 
@@ -125,6 +127,17 @@ create table textbookSolution (
 	FOREIGN KEY (ISBN) REFERENCES book(ISBN) ON DELETE CASCADE
 );
 
+-- questions student are looking for
+DROP TABLE IF EXISTS findsSolution;
+create table findsSolution ( 
+	studentID VARCHAR(16) NOT NULL,
+	questionNo INTEGER NOT NULL,
+	foundSolutionDate DATE NOT NULL,
+	PRIMARY KEY (studentID, questionNo),
+	FOREIGN KEY (studentID) REFERENCES student(studentID) ON DELETE CASCADE,
+	FOREIGN KEY (questionNo) REFERENCES textbookSolution(questionNo) ON DELETE CASCADE	
+); 
+
 -- relation between textbook solution and tutors
 DROP TABLE IF EXISTS textBookSolutionGivenBy;
 create table textBookSolutionGivenBy ( 
@@ -133,7 +146,7 @@ create table textBookSolutionGivenBy (
 	tutorID VARCHAR(16) NOT NULL,
 	PRIMARY KEY (ISBN, questionNo, tutorID),
 	FOREIGN KEY (ISBN) REFERENCES book(ISBN) ON DELETE CASCADE,
-	FOREIGN KEY (questionNo) REFERENCES questions(questionNo) ON DELETE CASCADE,
+	FOREIGN KEY (questionNo) REFERENCES textbookSolution(questionNo) ON DELETE CASCADE,
 	FOREIGN KEY (tutorID) REFERENCES tutor(tutorID) ON DELETE CASCADE
 );
 
@@ -160,17 +173,6 @@ create table expertAnswer (
 	FOREIGN KEY (questionID) REFERENCES questions(questionID) ON DELETE CASCADE
 );
 
-DROP TABLE IF EXISTS tutor;
-create table tutor (
-	tutorID VARCHAR(16) NOT NULL, 
-	tutorName VARCHAR(32) NOT NULL,
-	totalLike Integer NOT NULL,
-	totalDisLike Integer NOT NULL,
-	idle Boolean NOT NULL,
-	degree VARCHAR(32),
-	majors VARCHAR(32),
-	PRIMARY KEY (tutorID)
-);
  
 -- reviews of expert answers
 DROP TABLE IF EXISTS expertAnswerReviews;
@@ -196,9 +198,8 @@ create table expertAnswerGivenBy (
 );	
 
 -- restart foreign key checks
-SET FOREIGN_KEY_CHECKS = 1;
+--SET FOREIGN_KEY_CHECKS = 1;
 
 -- sample data for student table
-INSERT INTO student (studentID, studentName, studentPhoneNo, studentAddress, studentEmail, plan, fee) VALUES (111111, "Jack", 8581111111, "122 Jack Road", "Jack@jack.edu", "monthly", 100)
-
+INSERT INTO student (studentID, studentName, studentPhoneNo, studentAddress, studentEmail, plan, fee) VALUES (111111, "Jack", 8581111111, "122 Jack Road", "Jack@jack.edu", "monthly", 100);
 
