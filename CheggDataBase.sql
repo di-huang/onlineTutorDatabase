@@ -132,10 +132,11 @@ DROP TABLE IF EXISTS findsSolution;
 create table findsSolution ( 
 	studentID VARCHAR(16) NOT NULL,
 	questionNo INTEGER NOT NULL,
+	ISBN VARCHAR(13) NOT NULL,
 	foundSolutionDate DATE NOT NULL,
 	PRIMARY KEY (studentID, questionNo),
 	FOREIGN KEY (studentID) REFERENCES student(studentID) ON DELETE CASCADE,
-	FOREIGN KEY (questionNo) REFERENCES textbookSolution(questionNo) ON DELETE CASCADE	
+	FOREIGN KEY (ISBN, questionNo) REFERENCES textbookSolution(ISBN, questionNo) ON DELETE CASCADE
 ); 
 
 -- relation between textbook solution and tutors
@@ -145,9 +146,8 @@ create table textBookSolutionGivenBy (
 	questionNo INTEGER NOT NULL, 
 	tutorID VARCHAR(16) NOT NULL,
 	PRIMARY KEY (ISBN, questionNo, tutorID),
-	FOREIGN KEY (ISBN) REFERENCES book(ISBN) ON DELETE CASCADE,
 	FOREIGN KEY (tutorID) REFERENCES tutor(tutorID) ON DELETE CASCADE,
-	FOREIGN KEY (questionNo) REFERENCES textbookSolution(questionNo) ON DELETE CASCADE
+	FOREIGN KEY (ISBN, questionNo) REFERENCES textbookSolution(ISBN, questionNo) ON DELETE CASCADE
 );
 
 -- information on tutors who answer a question
