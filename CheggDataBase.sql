@@ -12,7 +12,6 @@ DROP TABLE IF EXISTS student, orders, payment, bookOrdered, bookSoldBy, bookSell
 SET FOREIGN_kEY_CHECKS = 1;
 
 -- students using Chegg
-DROP TABLE IF EXISTS student;
 create table student (
 	studentID VARCHAR(16) NOT NULL,
 	studentName VARCHAR(32),
@@ -25,7 +24,6 @@ create table student (
 );
 
 -- information about books for sell and rental
-DROP TABLE IF EXISTS book;
 create table book (
 	ISBN VARCHAR(13) NOT NULL,
 	bookName VARCHAR(64),
@@ -36,7 +34,6 @@ create table book (
 );
 
 -- information about seller of the book
-DROP TABLE IF EXISTS bookSeller;
 create table bookSeller (
 	sellerID VARCHAR(16) NOT NULL, 
 	sellerAddress VARCHAR(64),
@@ -44,7 +41,6 @@ create table bookSeller (
 	PRIMARY KEY (sellerID)
 );
 
-DROP TABLE IF EXISTS tutor;
 create table tutor (
 	tutorID VARCHAR(16) NOT NULL, 
 	tutorName VARCHAR(32) NOT NULL,
@@ -57,7 +53,6 @@ create table tutor (
 );
 
 -- orders made by students
-DROP TABLE IF EXISTS orders;
 create table orders (
 	orderID VARCHAR(16) NOT NULL,
 	studentID VARCHAR(16) NOT NULL,
@@ -71,7 +66,6 @@ create table orders (
 );
 
 -- payment information of a order
-DROP TABLE IF EXISTS payment;
 create table payment (
 	cardNo VARCHAR(16) NOT NULL,
 	studentID VARCHAR(16) NOT NULL,
@@ -82,7 +76,6 @@ create table payment (
 );
 
 -- books ordered inside an order
-DROP TABLE IF EXISTS bookOrdered;
 create table bookOrdered ( 
 	orderID VARCHAR(16) NOT NULL,
 	ISBN VARCHAR(13), 
@@ -96,7 +89,6 @@ create table bookOrdered (
 );
 
 -- relation that connects bookOrdered and bookSeller
-DROP TABLE IF EXISTS bookSoldBy;
 create table bookSoldBy (
 	ISBN VARCHAR(13) NOT NULL,
 	sellerID VARCHAR(16) NOT NULL,
@@ -107,7 +99,6 @@ create table bookSoldBy (
 
 
 -- questions asked by students
-DROP TABLE IF EXISTS questions;
 create table questions (
 	questionID VARCHAR(16) NOT NULL,
 	studentID VARCHAR(16) NOT NULL,
@@ -118,7 +109,6 @@ create table questions (
 );
 
 -- solution of textbooks
-DROP TABLE IF EXISTS textbookSolution;
 create table textbookSolution ( 
 	ISBN VARCHAR(13) NOT NULL,
 	questionNo INTEGER NOT NULL, 
@@ -128,7 +118,6 @@ create table textbookSolution (
 );
 
 -- questions student are looking for
-DROP TABLE IF EXISTS findsSolution;
 create table findsSolution ( 
 	studentID VARCHAR(16) NOT NULL,
 	questionNo INTEGER NOT NULL,
@@ -140,8 +129,7 @@ create table findsSolution (
 ); 
 
 -- relation between textbook solution and tutors
-DROP TABLE IF EXISTS textBookSolutionGivenBy;
-create table textBookSolutionGivenBy ( 
+create table textbookSolutionGivenBy ( 
 	ISBN VARCHAR(13) NOT NULL, 
 	questionNo INTEGER NOT NULL, 
 	tutorID VARCHAR(16) NOT NULL,
@@ -151,7 +139,6 @@ create table textBookSolutionGivenBy (
 );
 
 -- information on tutors who answer a question
-DROP TABLE IF EXISTS questionAnsweredBy;
 create table questionAnsweredBy (
 	tutorID VARCHAR(16) NOT NULL,
 	questionID VARCHAR(16) NOT NULL,
@@ -160,7 +147,6 @@ create table questionAnsweredBy (
 	FOREIGN KEY (questionID) REFERENCES questions(questionID) ON DELETE CASCADE 
 );
 
-DROP TABLE IF EXISTS expertAnswer;
 create table expertAnswer ( 
 	answerID VARCHAR(16) NOT NULL, 
 	questionID VARCHAR(16) NOT NULL,
@@ -175,7 +161,6 @@ create table expertAnswer (
 
  
 -- reviews of expert answers
-DROP TABLE IF EXISTS expertAnswerReviews;
 create table expertAnswerReviews ( 
 	answerID VARCHAR(16) NOT NULL,
 	questionID VARCHAR(16) NOT NULL,
@@ -188,7 +173,6 @@ create table expertAnswerReviews (
 );
 
 -- relation between expert answers and tutors
-DROP TABLE IF EXISTS expertAnswerGivenBy;
 create table expertAnswerGivenBy (
 	questionID VARCHAR(16) NOT NULL,
 	tutorID VARCHAR(16) NOT NULL,
