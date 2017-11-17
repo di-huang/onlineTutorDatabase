@@ -8,7 +8,9 @@ USE db_rdong6
 
 -- disable checking foreign keys so we could delete tables conviniently
 SET FOREIGN_KEY_CHECKS = 0; 
+-- remove all tables
 DROP TABLE IF EXISTS student, orders, payment, bookOrdered, bookSoldBy, bookSeller, book, findsSolution, textbookSolution, textbookSolutionGivenBy, questions, questionAnsweredBy, expertAnswerReviews, expertAnswerGivenBy, expertAnswer, tutor; 
+-- re-enable foreign key checks
 SET FOREIGN_kEY_CHECKS = 1;
 
 -- students using Chegg
@@ -181,9 +183,5 @@ create table expertAnswerGivenBy (
 	FOREIGN KEY (tutorID) REFERENCES tutor(tutorID) ON DELETE CASCADE
 );	
 
--- restart foreign key checks
---SET FOREIGN_KEY_CHECKS = 1;
-
 -- sample data for student table
 INSERT INTO student (studentID, studentName, studentPhoneNo, studentAddress, studentEmail, plan, fee) VALUES (111111, "Jack", 8581111111, "122 Jack Road", "Jack@jack.edu", "monthly", 100);
-
