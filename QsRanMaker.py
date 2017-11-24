@@ -44,9 +44,9 @@ def exe_makefile(exe):
 		qsubj = random.choice(QsSubjs)
 		if exe:
 			sql = ("insert into questions values "
-				"('%s', '%s', '%s', '%s')") % (str(qid), sid, qsubj, 'question content')
+				"('%d', '%d', '%s', '%s')") % (qid, int(sid), qsubj, 'question content')
 			cursor.execute(sql)
-		fm.makebody(('%s', '%s', '%s', '%s'), (str(qid), sid, qsubj, 'question content'))
+		fm.makebody(('%d', '%d', '%s', '%s'), (qid, int(sid), qsubj, 'question content'))
 
 	fm.makeend()
 	if exe:
@@ -55,9 +55,9 @@ def exe_makefile(exe):
 		#cursor.execute('rollback')
 
 # only make sql files
-exe_makefile(False)
+# exe_makefile(False)
 # execute insert cmds and make sql files 
-# exe_makefile(True)
+exe_makefile(True)
 
 
 
