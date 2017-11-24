@@ -32,7 +32,7 @@ class fileMaker():
 		res = "("
 		for f in format:
 			if f == '%s':
-				res += "'%s', "
+				res += '"%s", '
 			else:
 				res += "%s, "
 		res = res[:len(res)-2]		# remove the last comma and space
