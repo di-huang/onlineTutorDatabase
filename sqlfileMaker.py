@@ -1,5 +1,9 @@
 import os
 
+'''
+Make input=N insert-into cases for particular table and 
+store them in a specific sql file
+'''
 class fileMaker():
 
 	def __init__(self, filename='insert.sql'):
