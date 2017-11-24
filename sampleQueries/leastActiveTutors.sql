@@ -8,11 +8,11 @@ FROM
 				(SELECT tutorID 
 				FROM questionAnsweredBy t1
 				)
-				UNION
+				UNION ALL
 				(SELECT tutorID 
 				FROM expertAnswerGivenBy t2
 				)
-				UNION
+				UNION ALL
 				(SELECT tutorID 
 				FROM textbookSolutionGivenBy t3
 				)
@@ -21,23 +21,23 @@ FROM
 		) t5
 	WHERE 
 		(questionsAnswered <= ALL
-			(SELECT count(tutorID) AS questionsAnswered
+			(SELECT count(tutorID) AS questionsAnswered2
 			FROM
 				(
 					(SELECT tutorID 
 					FROM questionAnsweredBy t6
 					)
-					UNION
+					UNION ALL
 					(SELECT tutorID 
 					FROM expertAnswerGivenBy t7
 					)
-					UNION
+					UNION ALL
 					(SELECT tutorID 
 					FROM textbookSolutionGivenBy t8
 					)
 				) t9
 			GROUP BY tutorID
-			) t10
+			)
 		)
 	) nj1
 	NATURAL JOIN

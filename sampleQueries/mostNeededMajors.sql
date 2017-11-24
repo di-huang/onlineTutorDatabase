@@ -13,7 +13,7 @@ FROM
 				FROM tutor t2
 				) nj2
 			)
-			UNION
+			UNION ALL
 			(SELECT major
 			FROM 
 				(SELECT tutorID 
@@ -24,7 +24,7 @@ FROM
 				FROM tutor t4
 				) nj4
 			)
-			UNION
+			UNION ALL
 			(SELECT major
 			FROM 
 				(SELECT tutorID 
