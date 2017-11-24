@@ -1,14 +1,14 @@
 import os
 
 '''
-Make input=N insert-into cases for particular table and 
+Make input=N insert-into cases for a particular table and 
 store them in a specific sql file
 '''
 class fileMaker():
 
 	def __init__(self, filename='insert.sql'):
 		self.filename = filename
-		self.file = open(filename, 'w+')
+		self.file = open(filename, 'a+')
 
 	def makehead(self, target=''):				
 		self.file.write('insert into %s values \n' % target)
@@ -31,7 +31,7 @@ class fileMaker():
 	def doformat(self, format=()):
 		res = "("
 		for f in format:
-			if f == '%s':
+			if f == '%s' or f == '%t':
 				res += '"%s", '
 			else:
 				res += "%s, "
@@ -39,9 +39,19 @@ class fileMaker():
 		res += ")"
 		return res
 
+'''TestCases below
+The symbol '%' used here is just for clarification, there's only difference between 
+'%s' and non-'%s' actually
+%s: string
+%d: decimal (int, float, double)
+%b: boolean
+%t: datetime
+''' 
 # fm = fileMaker('InsertTestcases.sql')
 # fm.makehead('testcase')
 # fm.makebody(('%s', '%s', '%b', '%s'), ('1001', '1001', 'True', 'content'))
-# fm.makebody(('%s', '%s', '%s', '%s'), ('1002', '1002', 'Math', 'content'))
-# fm.makebody(('%d', '%s', '%s', '%s'), ('1003', '1003', 'Math', 'content'))
+# fm.makebody(('%s', '%s', '%s', '%s', '%d'),
+# 	("0439708184", "Harry Potter and the Sorcerer's Stone", "J.K. Rowling", "p2", 1.01))
+# fm.makebody(('%d', '%d', '%d', '%s', '%t', '%d', '%s'),
+# 	(111, 1001, 1111222233334444, "textbook", '2017-11-22 23:10:22', 87, "pending"))
 # fm.makeend()
