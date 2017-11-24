@@ -9,7 +9,7 @@ USE db_rdong6
 -- disable checking foreign keys so we could delete tables conviniently
 SET FOREIGN_KEY_CHECKS = 0; 
 -- remove all tables
-DROP TABLE IF EXISTS student, orders, payment, bookOrdered, bookSoldBy, bookSeller, book, findsSolution, textbookSolution, textbookSolutionGivenBy, questions, questionAnsweredBy, expertAnswerReviews, expertAnswerGivenBy, expertAnswer, tutor; 
+DROP TABLE IF EXISTS student, orders, payment, bookSeller, book, findsSolution, textbookSolution, textbookSolutionGivenBy, questions, questionAnsweredBy, expertAnswerReviews, expertAnswerGivenBy, expertAnswer, tutor, suppliedBy; 
 -- re-enable foreign key checks
 SET FOREIGN_kEY_CHECKS = 1;
 
@@ -77,28 +77,20 @@ create table payment (
 	FOREIGN KEY (studentID) REFERENCES student(studentID) ON DELETE CASCADE
 );
 
--- books ordered inside an order
-create table bookOrdered ( 
+-- books purchased within an order
+create table suppliedBy (
+	sellerID VARCHAR(16) NOT NULL,
 	orderID VARCHAR(16) NOT NULL,
 	ISBN VARCHAR(13), 
-	quantiy INTEGER,
+	quantity INTEGER,
 	price DOUBLE,
 	description VARCHAR(10),
 	dueDate DATETIME,
 	arrivalDate DATETIME,
 	FOREIGN KEY (orderID) REFERENCES orders(orderID),
-	FOREIGN KEY (ISBN) REFERENCES book(ISBN)
-);
-
--- relation that connects bookOrdered and bookSeller
-create table bookSoldBy (
-	ISBN VARCHAR(13) NOT NULL,
-	sellerID VARCHAR(16) NOT NULL,
-	PRIMARY KEY (ISBN, sellerID),
-	FOREIGN KEY (ISBN) REFERENCES book(ISBN) ON DELETE CASCADE,
+	FOREIGN KEY (ISBN) REFERENCES book(ISBN),
 	FOREIGN KEY (sellerID) REFERENCES bookSeller(sellerID) ON DELETE CASCADE
 );
-
 
 -- questions asked by students
 create table questions (
@@ -184,4 +176,67 @@ create table expertAnswerGivenBy (
 );	
 
 -- sample data for student table
-INSERT INTO student (studentID, studentName, studentPhoneNo, studentAddress, studentEmail, plan, fee) VALUES (111111, "Jack", 8581111111, "122 Jack Road", "Jack@jack.edu", "monthly", 100);
+INSERT INTO student 
+(studentID, studentName, studentPhoneNo, studentAddress, studentEmail, plan, fee)
+VALUES 
+(111111, "Jack", 8581111111, "122 Jack Road", "Jack@jack.edu", "monthly", 100);
+
+-- sample data for tutor table
+INSERT INTO tutor 
+(tutorID, tutorName, totalLike, totalDisLike, idle, degree, majors)
+VALUES
+(1111, "Alex", 50, 0, TRUE, "Master", "Math"),
+(2222, "Beth", 40, 0, True, "Master", "English"),
+(3333, "Catherine", 30, 0, TRUE, "Master", "Philosophy"),
+(4444, "Daniel", 20, 0, TRUE, "Bachelor", "CS"),
+(5555, "Edger", 10, 0, TRUE, "PHD", "ECE");
+
+-- sample data for student
+INSERT INTO student
+(studentID, studentName, studentPhoneNO, studentAddress, studentEmail, plan, fee)
+VALUES
+(11, "s1", "111-111-1111", "111 One Road", "1111@One.com", "monthly", 5000),
+(22, "s2", "222-222-2222", "222 Two Road", "2222@two.com", "yearly", 8000),
+(33, "s3", "333-333-3333", "333 Three Road", "3333@three.com", "yearly", 9000),
+(44, "s4", "444-444-4444", "444 Four Road", "4444@four.com", "monthly", 12),
+(55, "s5", "555-555-5555", "555 Five Road", "5555@five.com", "monthly", 77);
+
+-- sample data for seller
+INSERT INTO bookSeller
+(sellerID, sellerAddress, sellerName)
+VALUES
+(1, "seller1 rd", "handsomeSeller"),
+(2, "seller2 rd", "coolSeller"),
+(3, "seller3 rd", "amazingSeller"),
+(4, "seller4 rd", "fantasticSeller"),
+(5, "seller5 rd", "bigSeller");
+
+-- sample data for book
+INSERT INTO book
+(ISBN, bookName, author, publisher, edition)
+VALUES
+("9780596009205", "Head First Java", "Kathy Sierra", "p1", 2),
+("0439708184", "Harry Potter and the Sorcerer's Stone", "J.K. Rowling", "p2", 1),
+("1542046637", "The Good Samaritan", "John Marrs", "p3", 1),
+("9780151010264", "Animal Farm", "George Orwell", "Houghton Mifflin Harcourt", 2),
+("9780062696120", "Brave New World", "Aldous Huxley", "Harper", 1);
+
+-- sample data for orders
+INSERT INTO orders
+(orderID, studentID, cardNo, itemType, orderDate, orderTotal, orderStatus)
+VALUES
+(111, 11, 1111222233334444, "textbook", '2017-11-22 23:10:22', 87, "pending"),
+(222, 22, 2222333344445555, "textbook", '2018-12-12 11:11:58', 98, "cancelled"),
+(333, 33, 3333444455556666, "textbook", '2019-05-09 13:55:45', 66, "pending"),
+(444, 44, 4444555566667777, "textbook", '2016-06-09 14:45:19', 12, "completed"),
+(555, 55, 5555666677778888, "textbook", '2015-07-18 08:09:08', 123, "completed");
+
+-- sample data for supplied by
+INSERT INTO suppliedBy
+(sellerID, orderID, ISBN, quantity, price, description, dueDate, arrivalDate)
+VALUES
+(1, 222, "9780062696120", 10, 199, "rental", '2017-10-30 11:11:22', '2017-08-12 23:34:11'),
+(1, 222, "1542046637", 20, 12, "rental", '2018-08-18 12:22:10', '2017-05-18 15:22:31'),
+(2, 333, "9780062696120", 3, 99, "purchase", '2017-07-22 15:33:21', '2017-01-01 01:22:33'),
+(3, 333, "9780151010264", 18, 123, "purchase", '2016-07-11 12:14:57', '2016-09-23 13:22:41'),
+(4, 555, "1542046637", 777, 21, "rental", '2015-01-01 12:34:55', '2014-09-09 12:12:12');

@@ -29,7 +29,7 @@ High cost of textbooks; students being not able to get extra help for their cour
 - How long should each appointment time last?  
 
 ## Assumptions
-We are assuming that each customer only has one account and no events occuring at the same time. Tutoring is limited to only practical subjects (cannot help with field work, lab procedures and so on). All hired tutors are professional enough to anwser any on-topic question. Only students request services (rent/buy textbooks, ask for homework help and so on).
+We are assuming that each customer only has one account and no events occuring at the same time. Tutoring is limited to only practical subjects (cannot help with field work, lab procedures and so on). All hired tutors are professional enough to anwser any on-topic question, and one tutro will specialize in only one major. Only students request services (rent/buy textbooks, ask for homework help and so on).
 
 ## Project Scope
 ### In scope
