@@ -50,7 +50,7 @@ create table tutor (
 	totalDisLike Integer NOT NULL,
 	idle Boolean NOT NULL,
 	degree VARCHAR(32),
-	majors VARCHAR(32),
+	major VARCHAR(32),
 	PRIMARY KEY (tutorID)
 );
 
@@ -136,7 +136,7 @@ create table textbookSolutionGivenBy (
 create table questionAnsweredBy (
 	tutorID VARCHAR(16) NOT NULL,
 	questionID VARCHAR(16) NOT NULL,
-	PRIMARY KEY (tutorID),
+	PRIMARY KEY (questionID),
 	FOREIGN KEY (tutorID) REFERENCES tutor(tutorID) ON DELETE CASCADE,
 	FOREIGN KEY (questionID) REFERENCES questions(questionID) ON DELETE CASCADE 
 );
@@ -175,15 +175,9 @@ create table expertAnswerGivenBy (
 	FOREIGN KEY (tutorID) REFERENCES tutor(tutorID) ON DELETE CASCADE
 );	
 
--- sample data for student table
-INSERT INTO student 
-(studentID, studentName, studentPhoneNo, studentAddress, studentEmail, plan, fee)
-VALUES 
-(111111, "Jack", 8581111111, "122 Jack Road", "Jack@jack.edu", "monthly", 100);
-
 -- sample data for tutor table
 INSERT INTO tutor 
-(tutorID, tutorName, totalLike, totalDisLike, idle, degree, majors)
+(tutorID, tutorName, totalLike, totalDisLike, idle, degree, major)
 VALUES
 (1111, "Alex", 50, 0, TRUE, "Master", "Math"),
 (2222, "Beth", 40, 0, True, "Master", "English"),
@@ -199,7 +193,12 @@ VALUES
 (22, "s2", "222-222-2222", "222 Two Road", "2222@two.com", "yearly", 8000),
 (33, "s3", "333-333-3333", "333 Three Road", "3333@three.com", "yearly", 9000),
 (44, "s4", "444-444-4444", "444 Four Road", "4444@four.com", "monthly", 12),
-(55, "s5", "555-555-5555", "555 Five Road", "5555@five.com", "monthly", 77);
+(55, "s5", "555-555-5555", "555 Five Road", "5555@five.com", "monthly", 77),
+(66, "s6", "666-666-6666", "666 Six Road", "6666@six.com", "monthly", 123),
+(77, "s7", "777-777-7777", "777 Seven Road", "7777@seven.com", "yearly", 222222),
+(88, "s8", "888-888-8888", "888 Eight Road", "8888@eight.com", "mothly", 186756),
+(99, "s9", "999-999-9999", "999 Nine Road", "9999@nine.com", "yearly", 21313),
+(73, "s10", "000-000-0000", "000 Zero Road", "0000@zero.com", "monthly", 2313);
 
 -- sample data for seller
 INSERT INTO bookSeller
@@ -215,11 +214,11 @@ VALUES
 INSERT INTO book
 (ISBN, bookName, author, publisher, edition)
 VALUES
-("9780596009205", "Head First Java", "Kathy Sierra", "p1", 2),
-("0439708184", "Harry Potter and the Sorcerer's Stone", "J.K. Rowling", "p2", 1),
-("1542046637", "The Good Samaritan", "John Marrs", "p3", 1),
-("9780151010264", "Animal Farm", "George Orwell", "Houghton Mifflin Harcourt", 2),
-("9780062696120", "Brave New World", "Aldous Huxley", "Harper", 1);
+("11111", "Head First Java", "Kathy Sierra", "p1", 2),
+("22222", "Harry Potter and the Sorcerer's Stone", "J.K. Rowling", "p2", 1),
+("33333", "The Good Samaritan", "John Marrs", "p3", 1),
+("44444", "Animal Farm", "George Orwell", "Houghton Mifflin Harcourt", 2),
+("55555", "Brave New World", "Aldous Huxley", "Harper", 1);
 
 -- sample data for orders
 INSERT INTO orders
@@ -235,8 +234,85 @@ VALUES
 INSERT INTO suppliedBy
 (sellerID, orderID, ISBN, quantity, price, description, dueDate, arrivalDate)
 VALUES
-(1, 222, "9780062696120", 10, 199, "rental", '2017-10-30 11:11:22', '2017-08-12 23:34:11'),
-(1, 222, "1542046637", 20, 12, "rental", '2018-08-18 12:22:10', '2017-05-18 15:22:31'),
-(2, 333, "9780062696120", 3, 99, "purchase", '2017-07-22 15:33:21', '2017-01-01 01:22:33'),
-(3, 333, "9780151010264", 18, 123, "purchase", '2016-07-11 12:14:57', '2016-09-23 13:22:41'),
-(4, 555, "1542046637", 777, 21, "rental", '2015-01-01 12:34:55', '2014-09-09 12:12:12');
+(1, 222, "11111", 10, 199, "rental", '2017-10-30 11:11:22', '2017-08-12 23:34:11'),
+(1, 222, "22222", 20, 12, "rental", '2018-08-18 12:22:10', '2017-05-18 15:22:31'),
+(2, 333, "33333", 3, 99, "purchase", '2017-07-22 15:33:21', '2017-01-01 01:22:33'),
+(3, 333, "44444", 18, 123, "purchase", '2016-07-11 12:14:57', '2016-09-23 13:22:41'),
+(4, 555, "55555", 777, 21, "rental", '2015-01-01 12:34:55', '2014-09-09 12:12:12');
+
+-- sample data for question
+INSERT INTO questions
+(questionID, studentID, questionSubject, questionContent)
+VALUES
+(111111, 11, "subject1", "content1"),
+(222222, 22, "subject2", "content2"),
+(333333, 33, "subject3", "content3"),
+(444444, 44, "subject4", "content4"),
+(555555, 55, "subject5", "content5"),
+(666666, 66, "subject6", "content6"),
+(777777, 77, "subject7", "content7"),
+(888888, 88, "subject8", "content8"),
+(999999, 99, "subject9", "content9"),
+(123456, 73, "subject142", "content231");
+
+-- sample data for textbook solution
+INSERT INTO textbookSolution
+(ISBN, questionNo, solution)
+VALUES
+("11111", 1, "solution1"),
+("11111", 2, "solution2"),
+("11111", 3, "solution3"),
+("11111", 4, "solution4"),
+("11111", 5, "solution5"),
+("22222", 1, "solution6"),
+("22222", 2, "solution7"),
+("22222", 3, "solution8"),
+("22222", 4, "solution9"),
+("22222", 5, "solution10");
+
+-- sample data for textbook solution given by 
+INSERT INTO textbookSolutionGivenBy
+(ISBN, questionNo, tutorID)
+VALUES
+("11111", 1, 1111),
+("11111", 2, 2222),
+("11111", 3, 3333),
+("11111", 4, 4444),
+("11111", 5, 5555),
+("22222", 1, 1111),
+("22222", 2, 1111),
+("22222", 3, 1111),
+("22222", 4, 1111),
+("22222", 5, 1111);
+
+-- sample data for question answeredby
+INSERT INTO questionAnsweredBy
+(tutorID, questionID)
+VALUES
+(1111, 111111),
+(1111, 222222),
+(1111, 333333),
+(1111, 444444),
+(1111, 555555),
+(5555, 888888),
+(3333, 777777),
+(4444, 666666),
+(2222, 999999),
+(2222, 123456);
+
+-- sample data for expertAnswerGivenBy
+INSERT INTO expertAnswerGivenBy
+(tutorID, questionID)
+VALUES
+(2222, 111111),
+(3333, 222222),
+(4444, 333333),
+(5555, 444444),
+(1111, 555555),
+(1111, 888888),
+(1111, 777777),
+(1111, 666666),
+(1111, 999999),
+(1111, 123456);
+
+

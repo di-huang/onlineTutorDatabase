@@ -1,45 +1,43 @@
-(SELECT major 
+SELECT major 
 FROM
-	(SELECT major, count(*) amount
+	(SELECT major, count(*) AS amount
 	FROM 
-		(((SELECT major
-		FROM 
-			(SELECT tutorID 
-			FROM questionAnsweredBy
-			AS t1)
-			NATURAL JOIN 
-			(SELECT tutorID, major 
-			FROM tutor
-			AS t12) AS t13
-		)
-		AS t3
-		UNION
-		(SELECT major
-		FROM 
-			(SELECT tutorID 
-			FROM expertAnswerGivenBy
-			AS t18)
-			NATURAL JOIN 
-			(SELECT tutorID, major 
-			FROM tutor 
-			AS t13) AS t20
-		)
-		AS t6)) AS t21
-		UNION
-		(SELECT major
-		FROM 
-			(SELECT tutorID 
-			FROM textbookSolutionGivenBy
-			AS t19)
-			NATURAL JOIN 
-			(SELECT tutorID, major 
-			FROM tutor
-			AS t14) AS T22
-		)
-		AS t9) AS t16 
-	AS t23
-)
-AS t11
---ORDER BY amount DESC
---LIMIT 3
---AS t11
+		(
+			(SELECT major
+			FROM 
+				(SELECT tutorID 
+				FROM questionAnsweredBy t1
+				) nj1
+				NATURAL JOIN
+				(SELECT tutorID, major 
+				FROM tutor t2
+				) nj2
+			)
+			UNION
+			(SELECT major
+			FROM 
+				(SELECT tutorID 
+				FROM expertAnswerGivenBy t3
+				) nj3
+				NATURAL JOIN 
+				(SELECT tutorID, major 
+				FROM tutor t4
+				) nj4
+			)
+			UNION
+			(SELECT major
+			FROM 
+				(SELECT tutorID 
+				FROM textbookSolutionGivenBy t5
+				) nj5
+				NATURAL JOIN 
+				(SELECT tutorID, major 
+				FROM tutor
+				) nj6
+			)
+		) u
+	GROUP BY major
+	) t6
+ORDER BY amount desc
+Limit 3
+	
