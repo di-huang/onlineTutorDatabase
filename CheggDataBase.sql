@@ -1,5 +1,3 @@
-USE db_dhuang
-
 -- length of strings
 -- names of a person32
 -- ID: 16 (since CC has 16 and ISBN has 13, 16 should be enough)
