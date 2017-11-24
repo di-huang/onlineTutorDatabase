@@ -1,4 +1,4 @@
-USE db_rdong6
+USE db_dhuang
 
 -- length of strings
 -- names of a person32
@@ -96,7 +96,7 @@ create table suppliedBy (
 create table questions (
 	questionID VARCHAR(16) NOT NULL,
 	studentID VARCHAR(16) NOT NULL,
-	questionSubject VARCHAR(16),
+	questionSubject VARCHAR(32),
 	questionContent VARCHAR(1000) NOT NULL,
 	PRIMARY KEY (questionID),
 	FOREIGN KEY (studentID) REFERENCES student(studentID) ON DELETE CASCADE
@@ -175,12 +175,6 @@ create table expertAnswerGivenBy (
 	FOREIGN KEY (tutorID) REFERENCES tutor(tutorID) ON DELETE CASCADE
 );	
 
--- sample data for student table
-INSERT INTO student 
-(studentID, studentName, studentPhoneNo, studentAddress, studentEmail, plan, fee)
-VALUES 
-(111111, "Jack", 8581111111, "122 Jack Road", "Jack@jack.edu", "monthly", 100);
-
 -- sample data for tutor table
 INSERT INTO tutor 
 (tutorID, tutorName, totalLike, totalDisLike, idle, degree, majors)
@@ -195,11 +189,16 @@ VALUES
 INSERT INTO student
 (studentID, studentName, studentPhoneNO, studentAddress, studentEmail, plan, fee)
 VALUES
-(11, "s1", "111-111-1111", "111 One Road", "1111@One.com", "monthly", 5000),
-(22, "s2", "222-222-2222", "222 Two Road", "2222@two.com", "yearly", 8000),
-(33, "s3", "333-333-3333", "333 Three Road", "3333@three.com", "yearly", 9000),
-(44, "s4", "444-444-4444", "444 Four Road", "4444@four.com", "monthly", 12),
-(55, "s5", "555-555-5555", "555 Five Road", "5555@five.com", "monthly", 77);
+(1001, "s1", "111-111-1111", "111 One Road", "1111@One.com", "monthly", 33),
+(1002, "s2", "222-222-2222", "222 Two Road", "2222@two.com", "yearly", 300),
+(1003, "s3", "333-333-3333", "333 Three Road", "3333@three.com", "yearly", 310),
+(1004, "s4", "444-444-4444", "444 Four Road", "4444@four.com", "monthly", 50),
+(1005, "s5", "555-555-5555", "555 Five Road", "5555@five.com", "monthly", 98),
+(1006, "s6", "666-666-6666", "666 Six Road", "6666@six.com", "monthly", 28),
+(1007, "s7", "777-777-7777", "777 Seven Road", "7777@seven.com", "yearly", 320),
+(1008, "s8", "888-888-8888", "888 Eight Road", "8888@eight.com", "yearly", 312),
+(1009, "s9", "999-999-9999", "999 Nine Road", "9999@nine.com", "monthly", 29),
+(1010, "s10", "100-100-1010", "1010 Ten Road", "1010@ten.com", "monthly", 34);
 
 -- sample data for seller
 INSERT INTO bookSeller
@@ -225,11 +224,11 @@ VALUES
 INSERT INTO orders
 (orderID, studentID, cardNo, itemType, orderDate, orderTotal, orderStatus)
 VALUES
-(111, 11, 1111222233334444, "textbook", '2017-11-22 23:10:22', 87, "pending"),
-(222, 22, 2222333344445555, "textbook", '2018-12-12 11:11:58', 98, "cancelled"),
-(333, 33, 3333444455556666, "textbook", '2019-05-09 13:55:45', 66, "pending"),
-(444, 44, 4444555566667777, "textbook", '2016-06-09 14:45:19', 12, "completed"),
-(555, 55, 5555666677778888, "textbook", '2015-07-18 08:09:08', 123, "completed");
+(111, 1001, 1111222233334444, "textbook", '2017-11-22 23:10:22', 87, "pending"),
+(222, 1003, 2222333344445555, "textbook", '2018-12-12 11:11:58', 98, "cancelled"),
+(333, 1005, 3333444455556666, "textbook", '2019-05-09 13:55:45', 66, "pending"),
+(444, 1007, 4444555566667777, "textbook", '2016-06-09 14:45:19', 12, "completed"),
+(555, 1009, 5555666677778888, "textbook", '2015-07-18 08:09:08', 123, "completed");
 
 -- sample data for supplied by
 INSERT INTO suppliedBy
