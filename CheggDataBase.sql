@@ -195,18 +195,6 @@ VALUES
 INSERT INTO student
 (studentID, studentName, studentPhoneNO, studentAddress, studentEmail, plan, fee)
 VALUES
-<<<<<<< HEAD
-(11, "s1", "111-111-1111", "111 One Road", "1111@One.com", "monthly", 5000),
-(22, "s2", "222-222-2222", "222 Two Road", "2222@two.com", "yearly", 8000),
-(33, "s3", "333-333-3333", "333 Three Road", "3333@three.com", "yearly", 9000),
-(44, "s4", "444-444-4444", "444 Four Road", "4444@four.com", "monthly", 12),
-(55, "s5", "555-555-5555", "555 Five Road", "5555@five.com", "monthly", 77),
-(66, "s6", "666-666-6666", "666 Six Road", "6666@six.com", "monthly", 123),
-(77, "s7", "777-777-7777", "777 Seven Road", "7777@seven.com", "yearly", 222222),
-(88, "s8", "888-888-8888", "888 Eight Road", "8888@eight.com", "mothly", 186756),
-(99, "s9", "999-999-9999", "999 Nine Road", "9999@nine.com", "yearly", 21313),
-(73, "s10", "000-000-0000", "000 Zero Road", "0000@zero.com", "monthly", 2313);
-=======
 (1001, "s1", "111-111-1111", "111 One Road", "1111@One.com", "monthly", 33),
 (1002, "s2", "222-222-2222", "222 Two Road", "2222@two.com", "yearly", 300),
 (1003, "s3", "333-333-3333", "333 Three Road", "3333@three.com", "yearly", 310),
@@ -217,7 +205,6 @@ VALUES
 (1008, "s8", "888-888-8888", "888 Eight Road", "8888@eight.com", "yearly", 312),
 (1009, "s9", "999-999-9999", "999 Nine Road", "9999@nine.com", "monthly", 29),
 (1010, "s10", "100-100-1010", "1010 Ten Road", "1010@ten.com", "monthly", 34);
->>>>>>> 9360ecb7d2f20a6ac04897d766f76e2c698348e5
 
 -- sample data for seller
 INSERT INTO bookSeller
