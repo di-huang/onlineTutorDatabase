@@ -23,7 +23,7 @@ if res_fetch_stu == None or len(res_fetch_stu) == 0:
 
 ''' 
 insert questions randomly
-if make = True, then execute insert cmds and make sql files 
+if exe = True, then execute insert-cmds and make sql files 
 else then only make sql files
 '''
 def exe_makefile(exe):
