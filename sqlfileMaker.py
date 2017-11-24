@@ -1,5 +1,9 @@
 import os
 
+'''
+Make input=N insert-into cases for particular table and 
+store them in a specific sql file
+'''
 class fileMaker():
 
 	def __init__(self, filename='insert.sql'):
@@ -28,15 +32,16 @@ class fileMaker():
 		res = "("
 		for f in format:
 			if f == '%s':
-				f = "'%s',"
-			res += f
-		res = res[:len(res)-1]		# remove the last comma
+				res += "'%s', "
+			else:
+				res += "%s, "
+		res = res[:len(res)-2]		# remove the last comma and space
 		res += ")"
 		return res
 
-# fm = fileMaker('InsertQuestions.sql')
-# fm.makehead('questions')
-# fm.makebody(('%s', '%s', '%s', '%s'), ('1000', '44', 'Math', 'content'))
-# fm.makebody(('%s', '%s', '%s', '%s'), ('1001', '44', 'Math', 'content'))
-# fm.makebody(('%s', '%s', '%s', '%s'), ('1002', '44', 'Math', 'content'))
+# fm = fileMaker('InsertTestcases.sql')
+# fm.makehead('testcase')
+# fm.makebody(('%s', '%s', '%b', '%s'), ('1001', '1001', 'True', 'content'))
+# fm.makebody(('%s', '%s', '%s', '%s'), ('1002', '1002', 'Math', 'content'))
+# fm.makebody(('%d', '%s', '%s', '%s'), ('1003', '1003', 'Math', 'content'))
 # fm.makeend()
