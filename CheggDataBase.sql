@@ -7,7 +7,7 @@
 -- disable checking foreign keys so we could delete tables conviniently
 SET FOREIGN_KEY_CHECKS = 0; 
 -- remove all tables
-DROP TABLE IF EXISTS student, orders, payment, bookSeller, book, findsSolution, textbookSolution, textbookSolutionGivenBy, questions, questionAnsweredBy, expertAnswerReviews, expertAnswerGivenBy, expertAnswer, tutor, suppliedBy; 
+DROP TABLE IF EXISTS student, orders, payment, bookSeller, book, findsSolution, textbookSolution, textbookSolutionGivenBy, question, questionAnsweredBy, expertAnswerReviews, expertAnswerGivenBy, expertAnswer, tutor, suppliedBy; 
 -- re-enable foreign key checks
 SET FOREIGN_kEY_CHECKS = 1;
 
@@ -91,7 +91,7 @@ create table suppliedBy (
 );
 
 -- questions asked by students
-create table questions (
+create table question (
 	questionID VARCHAR(16) NOT NULL,
 	studentID VARCHAR(16) NOT NULL,
 	questionSubject VARCHAR(32),
@@ -136,7 +136,7 @@ create table questionAnsweredBy (
 	questionID VARCHAR(16) NOT NULL,
 	PRIMARY KEY (questionID),
 	FOREIGN KEY (tutorID) REFERENCES tutor(tutorID) ON DELETE CASCADE,
-	FOREIGN KEY (questionID) REFERENCES questions(questionID) ON DELETE CASCADE 
+	FOREIGN KEY (questionID) REFERENCES question(questionID) ON DELETE CASCADE 
 );
 
 create table expertAnswer ( 
@@ -148,7 +148,7 @@ create table expertAnswer (
 	likes Integer NOT NULL,
 	PRIMARY KEY (answerID),
 	FOREIGN KEY (tutorID) REFERENCES tutor(tutorID) ON DELETE CASCADE,
-	FOREIGN KEY (questionID) REFERENCES questions(questionID) ON DELETE CASCADE
+	FOREIGN KEY (questionID) REFERENCES question(questionID) ON DELETE CASCADE
 );
 
  
@@ -160,7 +160,7 @@ create table expertAnswerReviews (
 	reviewContent VARCHAR(1000) NOT NULL,
 	PRIMARY KEY (studentID, questionID, answerID),
 	FOREIGN KEY (studentID) REFERENCES student(studentID) ON DELETE CASCADE,
-	FOREIGN KEY (questionID) REFERENCES questions(questionID) ON DELETE CASCADE,
+	FOREIGN KEY (questionID) REFERENCES question(questionID) ON DELETE CASCADE,
 	FOREIGN KEY (answerID) REFERENCES expertAnswer(answerID) ON DELETE CASCADE
 );
 
@@ -169,15 +169,9 @@ create table expertAnswerGivenBy (
 	questionID VARCHAR(16) NOT NULL,
 	tutorID VARCHAR(16) NOT NULL,
 	PRIMARY KEY (questionID, tutorId),
-	FOREIGN KEY (questionID) REFERENCES questions(questionID) ON DELETE CASCADE,
+	FOREIGN KEY (questionID) REFERENCES question(questionID) ON DELETE CASCADE,
 	FOREIGN KEY (tutorID) REFERENCES tutor(tutorID) ON DELETE CASCADE
 );	
-
--- sample data for student table
-INSERT INTO student 
-(studentID, studentName, studentPhoneNo, studentAddress, studentEmail, plan, fee)
-VALUES 
-(111111, "Jack", 8581111111, "122 Jack Road", "Jack@jack.edu", "monthly", 100);
 
 -- sample data for tutor table
 INSERT INTO tutor 
@@ -245,19 +239,19 @@ VALUES
 (4, 555, "55555", 777, 21, "rental", '2015-01-01 12:34:55', '2014-09-09 12:12:12');
 
 -- sample data for question
-INSERT INTO questions
+INSERT INTO question
 (questionID, studentID, questionSubject, questionContent)
 VALUES
-(111111, 11, "subject1", "content1"),
-(222222, 22, "subject2", "content2"),
-(333333, 33, "subject3", "content3"),
-(444444, 44, "subject4", "content4"),
-(555555, 55, "subject5", "content5"),
-(666666, 66, "subject6", "content6"),
-(777777, 77, "subject7", "content7"),
-(888888, 88, "subject8", "content8"),
-(999999, 99, "subject9", "content9"),
-(123456, 73, "subject142", "content231");
+(111111, 1001, "subject1", "content1"),
+(222222, 1002, "subject2", "content2"),
+(333333, 1003, "subject3", "content3"),
+(444444, 1004, "subject4", "content4"),
+(555555, 1005, "subject5", "content5"),
+(666666, 1006, "subject6", "content6"),
+(777777, 1007, "subject7", "content7"),
+(888888, 1008, "subject8", "content8"),
+(999999, 1009, "subject9", "content9"),
+(123456, 1010, "subject142", "content231");
 
 -- sample data for textbook solution
 INSERT INTO textbookSolution
