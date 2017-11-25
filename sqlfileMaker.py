@@ -1,12 +1,17 @@
 import os
 
 '''
-Make input=N insert-into cases for a particular table and 
-store them in a specific sql file
+Generate insert-into test cases for a particular table and 
+store them in a specific sql file.
+Run the created sql file by this format:
+mysql> source (.../filename.sql, including the explicit path)
+actually, you may be able to drag the sql file into the terminal and get the full path.
+Take my MacOS for example:
+mysql> /Users/dihuang/Desktop/db_tst/db_dhuang/InsertTestcases.sql
 '''
 class fileMaker():
 
-	def __init__(self, filename='insert.sql'):
+	def __init__(self, filename='InsertDefault.sql'):
 		self.filename = filename
 		self.file = open(filename, 'a+')
 
