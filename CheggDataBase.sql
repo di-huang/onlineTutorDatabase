@@ -1,3 +1,5 @@
+-- USE <dbname>
+
 -- length of strings
 -- names of a person32
 -- ID: 16 (since CC has 16 and ISBN has 13, 16 should be enough)
@@ -57,7 +59,7 @@ create table orders (
 	orderID VARCHAR(16) NOT NULL,
 	studentID VARCHAR(16) NOT NULL,
 	cardNo VARCHAR(16),
-	itemType VARCHAR(16),
+	itemType VARCHAR(64),
 	orderDate DATETIME,
 	orderTotal DOUBLE,
 	orderStatus VARCHAR(16),
@@ -222,11 +224,16 @@ VALUES
 INSERT INTO orders
 (orderID, studentID, cardNo, itemType, orderDate, orderTotal, orderStatus)
 VALUES
-(111, 1001, 1111222233334444, "textbook", '2017-11-22 23:10:22', 87, "pending"),
-(222, 1003, 2222333344445555, "textbook", '2018-12-12 11:11:58', 98, "cancelled"),
-(333, 1005, 3333444455556666, "textbook", '2019-05-09 13:55:45', 66, "pending"),
-(444, 1007, 4444555566667777, "textbook", '2016-06-09 14:45:19', 12, "completed"),
-(555, 1009, 5555666677778888, "textbook", '2015-07-18 08:09:08', 123, "completed");
+(111, 1001, 1111222233334444, "Head First Java", '2017-11-22 23:10:22', 1, "pending"),
+(222, 1003, 2222333344445555, "Harry Potter and the Sorcerer's Stone", '2018-12-12 11:11:58', 1, "cancelled"),
+(333, 1005, 3333444455556666, "Head First Java", '2019-05-09 13:55:45', 2, "pending"),
+(444, 1007, 4444555566667777, "The Good Samaritan", '2016-06-09 14:45:19', 1, "completed"),
+(555, 1009, 5555666677778888, "Head First Java", '2015-07-18 08:09:08', 1, "completed"),
+(666, 1001, 1111222233334444, "Animal Farm", '2017-11-22 23:10:22', 2, "pending"),
+(777, 1003, 2222333344445555, "Head First Java", '2018-12-12 11:11:58', 2, "cancelled"),
+(888, 1005, 3333444455556666, "Brave New World", '2019-05-09 13:55:45', 1, "pending"),
+(999, 1007, 4444555566667777, "Animal Farm", '2016-06-09 14:45:19', 3, "completed"),
+(1000, 1009, 5555666677778888, "Brave New World", '2015-07-18 08:09:08', 1, "completed");
 
 -- sample data for supplied by
 INSERT INTO suppliedBy
