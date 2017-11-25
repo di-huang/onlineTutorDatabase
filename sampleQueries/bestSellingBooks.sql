@@ -1,18 +1,20 @@
-SELECT ISBN, copiesSold, unitPrice, totalIncome
+SELECT ISBN, bookName, author, copiesSold, unitPrice, totalIncome
 FROM
 	(
-		(SELECT ISBN, sum(quantity) AS copiesSold, price AS unitPrice, copiesSold * unitPrice AS totalIncome
-		FROM suppliedBy
+		(SELECT ISBN, copiesSold, unitPrice, totalIncome
+		FROM
+	       		(SELECT ISBN, sum(quantity) AS copiesSold, price AS unitPrice, sum(quantity) * price AS totalIncome
+			FROM suppliedBy
+			WHERE description = "purchase"
+			GROUP BY ISBN
+			) t1	
 		WHERE
-			(description = "purchase")
-			AND
 			(totalIncome >= all
-				(SELECT sum(quantity) * price AS totalIncome2
+				(SELECT sum(quantity) * price
 				FROM suppliedBy
 				GROUP BY ISBN
 				)
 			)
-		GROUP BY ISBN
 		) nj1
 		NATURAL JOIN
 		(SELECT ISBN, bookName, author
