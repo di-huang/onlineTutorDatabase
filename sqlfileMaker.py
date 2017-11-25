@@ -3,11 +3,11 @@ import os
 '''
 Generate insert-into test cases for a particular table and 
 store them in a specific sql file.
-Run the created sql file by this format:
+Run the created sql file by the following format:
 mysql> source (.../filename.sql, including the explicit path)
-actually, you may be able to drag the sql file into the terminal and get the full path.
-Take my MacOS for example:
-mysql> /Users/dihuang/Desktop/db_tst/db_dhuang/InsertTestcases.sql
+Actually, you may be able to drag the created sql file into the terminal 
+and get the full path. Take my MacOS for example:
+mysql> source /Users/dihuang/Desktop/db_tst/db_dhuang/xxx.sql
 '''
 class fileMaker():
 
