@@ -23,11 +23,11 @@ if res_fetch_stu == None or len(res_fetch_stu) == 0:
 
 ''' 
 insert questions randomly
-if make = True, then execute insert cmds and make sql files 
+if exe = True, then execute insert-cmds and make sql files 
 else then only make sql files
 '''
 def exe_makefile(exe):
-	N = int(input())			# the num of Qs to be inserted
+	N = int(input('\nHow many questions you want to insert? '))		# the num of Qs to be inserted
 	iniN = 100000				# initial question id number to start (default: 100000)
 	sql = 'select questionID from questions order by questionid desc limit 1'
 	cursor.execute(sql)
@@ -53,14 +53,9 @@ def exe_makefile(exe):
 		db.commit()
 		# rollback if you want
 		#cursor.execute('rollback')
-
+	print('Completed!')
 # only make sql files
 # exe_makefile(False)
 # execute insert cmds and make sql files 
 exe_makefile(True)
-
-
-
-
-
 
