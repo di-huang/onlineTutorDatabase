@@ -48,7 +48,7 @@ class fileMaker():
 The symbol '%' used here is just for clarification, there's only difference between 
 '%s' and non-'%s' actually
 %s: string
-%d: decimal (int, float, double)
+%d: digit (int, float, double)
 %b: boolean
 %t: datetime
 ''' 

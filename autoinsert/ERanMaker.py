@@ -3,6 +3,7 @@ import random
 from resource import *
 from sqlfileMaker import *
 
+'''Automatically generate a sql file which does N times insert-random-value operations'''
 # change to your db info if you want to test
 db = pymysql.connect(host='localhost', port=3306, user='root', passwd='root', db='db_dhuang' )
 cursor = db.cursor()
