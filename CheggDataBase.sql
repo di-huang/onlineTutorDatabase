@@ -117,7 +117,7 @@ for each row begin
 	beforeAfter = "A";
 end;
 
-create trigger auditInsertTrigger
+create trigger auditUpdateTrigger
 after update on orders
 for each row begin
 	insert into orderAudit set
