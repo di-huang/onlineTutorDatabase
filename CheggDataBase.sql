@@ -13,6 +13,9 @@ DROP TABLE IF EXISTS student, orders, payment, bookSeller, book, findsSolution, 
 -- re-enable foreign key checks
 SET FOREIGN_kEY_CHECKS = 1;
 
+-- remove all triggers
+drop trigger auditDeleteTrigger, auditInsertTrigger, auditUpdateTrigger;
+
 -- students using Chegg
 create table student (
 	studentID VARCHAR(16) NOT NULL,
@@ -85,65 +88,68 @@ create table orderAudit (
 -- triggers for orders audit table
 create trigger auditDeleteTrigger
 after delete on orders
-for each row begin
-	insert into orderAudit set
-	orderID = old.orderID,
-	studentID = old.studentID,
-	cardNo = old.cardNo,
-	itemType = old.itemType,
-	orderDate = old.orderDate,
-	orderTotal = old.orderTotal,
-	orderStatus = old.orderStatus,
-	action = "D",
-	actionTime = now(),
-	userID = user(),
-	beforeAfter = "B";
+for each row
+begin
+	insert into orderAudit 
+	set orderID = old.orderID,
+	    studentID = old.studentID,
+	    cardNo = old.cardNo,
+	    itemType = old.itemType,
+	    orderDate = old.orderDate,
+	    orderTotal = old.orderTotal,
+	    orderStatus = old.orderStatus,
+	    action = "D",
+	    actionTime = now(),
+	    userID = user(),
+	    beforeAfter = "B";
 end;
 
 create trigger auditInsertTrigger
 after insert on orders
-for each row begin
-	insert into orderAudit set
-	orderID = old.orderID,
-	studentID = old.studentID,
-	cardNo = old.cardNo,
-	itemType = old.itemType,
-	orderDate = old.orderDate,
-	orderTotal = old.orderTotal,
-	orderStatus = old.orderStatus,
-	action = "D",
-	actionTime = now(),
-	userID = user(),
-	beforeAfter = "A";
+for each row
+begin
+	insert into orderAudit
+	set orderID = old.orderID,
+	    studentID = old.studentID,
+	    cardNo = old.cardNo,
+	    itemType = old.itemType,
+	    orderDate = old.orderDate,
+	    orderTotal = old.orderTotal,
+	    orderStatus = old.orderStatus,
+	    action = "D",
+	    actionTime = now(),
+	    userID = user(),
+	    beforeAfter = "A";
 end;
 
 create trigger auditUpdateTrigger
 after update on orders
-for each row begin
-	insert into orderAudit set
-	orderID = old.orderID,
-	studentID = old.studentID,
-	cardNo = old.cardNo,
-	itemType = old.itemType,
-	orderDate = old.orderDate,
-	orderTotal = old.orderTotal,
-	orderStatus = old.orderStatus,
-	action = "D",
-	actionTime = now(),
-	userID = user(),
-	beforeAfter = "B";
-	insert into orderAudit set
-	orderID = old.orderID,
-	studentID = old.studentID,
-	cardNo = old.cardNo,
-	itemType = old.itemType,
-	orderDate = old.orderDate,
-	orderTotal = old.orderTotal,
-	orderStatus = old.orderStatus,
-	action = "D",
-	actionTime = now(),
-	userID = user(),
-	beforeAfter = "A";
+for each row
+begin
+	insert into orderAudit 
+	set orderID = old.orderID,
+	    studentID = old.studentID,
+	    cardNo = old.cardNo,
+	    itemType = old.itemType,
+	    orderDate = old.orderDate,
+	    orderTotal = old.orderTotal,
+	    orderStatus = old.orderStatus,
+	    action = "D",
+	    actionTime = now(),
+	    userID = user(),
+	    beforeAfter = "B";
+	insert into orderAudit
+	set orderID = old.orderID,
+	    studentID = old.studentID,
+	    cardNo = old.cardNo,
+	    itemType = old.itemType,
+	    orderDate = old.orderDate,
+	    orderTotal = old.orderTotal,
+	    orderStatus = old.orderStatus,
+	    action = "D",
+	    actionTime = now(),
+	    userID = user(),
+	    beforeAfter = "A";
 end;
 
 -- payment information of a order
