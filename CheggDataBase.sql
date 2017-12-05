@@ -9,7 +9,7 @@
 -- disable checking foreign keys so we could delete tables conviniently
 SET FOREIGN_KEY_CHECKS = 0; 
 -- remove all tables
-DROP TABLE IF EXISTS student, orders, payment, bookSeller, book, findsSolution, textbookSolution, textbookSolutionGivenBy, question, questionAnsweredBy, expertAnswerReviews, expertAnswerGivenBy, expertAnswer, tutor, suppliedBy; 
+DROP TABLE IF EXISTS student, orders, payment, bookSeller, book, findsSolution, textbookSolution, textbookSolutionGivenBy, question, questionAnsweredBy, expertAnswerReviews, expertAnswerGivenBy, expertAnswer, tutor, suppliedBy, orderAudit;
 -- re-enable foreign key checks
 SET FOREIGN_kEY_CHECKS = 1;
 
@@ -66,6 +66,85 @@ create table orders (
 	PRIMARY KEY (orderID),
 	FOREIGN KEY (studentID) REFERENCES student(studentID)
 );
+
+-- audit table for orders
+create table orderAudit (
+	orderID VARCHAR(16) NOT NULL,
+	studentID VARCHAR(16) NOT NULL,
+	cardNo VARCHAR(16),
+	itemType VARCHAR(64),
+	orderDate DATETIME,
+	orderTotal DOUBLE,
+	orderStatus VARCHAR(16),
+	action CHAR(1) NOT NULL,
+	actionTime DATETIME,
+	userID VARCHAR(16),
+	beforeAfter CHAR(1)
+);
+
+-- triggers for orders audit table
+create trigger auditDeleteTrigger
+after delete on orders
+for each row begin
+	insert into orderAudit set
+	orderID = old.orderID,
+	studentID = old.studentID,
+	cardNo = old.cardNo,
+	itemType = old.itemType,
+	orderDate = old.orderDate,
+	orderTotal = old.orderTotal,
+	orderStatus = old.orderStatus,
+	action = "D",
+	actionTime = now(),
+	userID = user(),
+	beforeAfter = "B";
+end;
+
+create trigger auditInsertTrigger
+after insert on orders
+for each row begin
+	insert into orderAudit set
+	orderID = old.orderID,
+	studentID = old.studentID,
+	cardNo = old.cardNo,
+	itemType = old.itemType,
+	orderDate = old.orderDate,
+	orderTotal = old.orderTotal,
+	orderStatus = old.orderStatus,
+	action = "D",
+	actionTime = now(),
+	userID = user(),
+	beforeAfter = "A";
+end;
+
+create trigger auditInsertTrigger
+after update on orders
+for each row begin
+	insert into orderAudit set
+	orderID = old.orderID,
+	studentID = old.studentID,
+	cardNo = old.cardNo,
+	itemType = old.itemType,
+	orderDate = old.orderDate,
+	orderTotal = old.orderTotal,
+	orderStatus = old.orderStatus,
+	action = "D",
+	actionTime = now(),
+	userID = user(),
+	beforeAfter = "B";
+	insert into orderAudit set
+	orderID = old.orderID,
+	studentID = old.studentID,
+	cardNo = old.cardNo,
+	itemType = old.itemType,
+	orderDate = old.orderDate,
+	orderTotal = old.orderTotal,
+	orderStatus = old.orderStatus,
+	action = "D",
+	actionTime = now(),
+	userID = user(),
+	beforeAfter = "A";
+end;
 
 -- payment information of a order
 create table payment (
