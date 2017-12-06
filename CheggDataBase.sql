@@ -1,4 +1,4 @@
--- USE <dbname>
+-- USE <db_name>
 
 -- length of strings
 -- names of a person32
@@ -14,7 +14,7 @@ DROP TABLE IF EXISTS student, orders, payment, bookSeller, book, findsSolution, 
 SET FOREIGN_kEY_CHECKS = 1;
 
 -- remove all triggers
-drop trigger auditDeleteTrigger, auditInsertTrigger, auditUpdateTrigger;
+-- DROP TRIGGER IF EXISTS orders.auditDeleteTrigger, orders.auditInsertTrigger, orders.auditUpdateTrigger;
 
 -- students using Chegg
 create table student (
@@ -86,80 +86,41 @@ create table orderAudit (
 );
 
 -- triggers for orders audit table
-create trigger auditDeleteTrigger
-after delete on orders
-for each row
-begin
-	insert into orderAudit 
-	set orderID = old.orderID,
-	    studentID = old.studentID,
-	    cardNo = old.cardNo,
-	    itemType = old.itemType,
-	    orderDate = old.orderDate,
-	    orderTotal = old.orderTotal,
-	    orderStatus = old.orderStatus,
-	    action = "D",
-	    actionTime = now(),
-	    userID = user(),
-	    beforeAfter = "B";
-end;
+DELIMITER //
+CREATE TRIGGER auditDeleteTrigger AFTER DELETE ON orders FOR EACH ROW
+BEGIN
+	INSERT INTO orderAudit 
+	(orderID, studentID, cardNo, itemType, orderDate, orderTotal, orderStatus, action, actionTime, userID, beforeAfter)
+	VALUES
+	(old.orderID, old.studentID, old.cardNo, old.itemType, old.orderDate, old.orderTotal, old.orderStatus, 'D', Now(), User(), 'A');
+END; //
+DELIMITER ;
 
-CREATE TRIGGER auditinserttrigger after INSERT 
-ON orders 
-FOR EACH row 
-  INSERT INTO orderaudit 
-              (orderid, 
-               studentid, 
-               cardno, 
-               itemtype, 
-               orderdate, 
-               ordertotal, 
-               orderstatus, 
-               action, 
-               actiontime, 
-               userid, 
-               beforeafter) 
-  VALUES     ( new.orderid, 
-               new.studentid, 
-               new.cardno, 
-               new.itemtype, 
-               new.orderdate, 
-               new.ordertotal, 
-               new.orderstatus, 
-               "i", 
-               Now(), 
-               User(), 
-               "a"); 
 
-create trigger auditUpdateTrigger
-after update on orders
-for each row
-begin
-	insert into orderAudit 
-	set orderID = old.orderID,
-	    studentID = old.studentID,
-	    cardNo = old.cardNo,
-	    itemType = old.itemType,
-	    orderDate = old.orderDate,
-	    orderTotal = old.orderTotal,
-	    orderStatus = old.orderStatus,
-	    action = "D",
-	    actionTime = now(),
-	    userID = user(),
-	    beforeAfter = "B";
-	insert into orderAudit
-	set orderID = old.orderID,
-	    studentID = old.studentID,
-	    cardNo = old.cardNo,
-	    itemType = old.itemType,
-	    orderDate = old.orderDate,
-	    orderTotal = old.orderTotal,
-	    orderStatus = old.orderStatus,
-	    action = "D",
-	    actionTime = now(),
-	    userID = user(),
-	    beforeAfter = "A";
-end;
+DELIMITER //
+CREATE TRIGGER auditInsertTrigger AFTER INSERT ON orders FOR EACH ROW
+BEGIN
+	INSERT INTO orderAudit 
+	(orderID, studentID, cardNo, itemType, orderDate, orderTotal, orderStatus, action, actionTime, userID, beforeAfter)
+	VALUES
+	(new.orderID, new.studentID, new.cardNo, new.itemType, new.orderDate, new.orderTotal, new.orderStatus, 'I', Now(), User(), 'B');
+END; //
+DELIMITER ;
+
+
+DELIMITER //
+CREATE TRIGGER auditUpdateTrigger AFTER UPDATE ON orders FOR EACH ROW
+BEGIN
+	INSERT INTO orderAudit 
+	(orderID, studentID, cardNo, itemType, orderDate, orderTotal, orderStatus, action, actionTime, userID, beforeAfter)
+	VALUES
+	(old.orderID, old.studentID, old.cardNo, old.itemType, old.orderDate, old.orderTotal, old.orderStatus, 'DU', Now(), User(), 'A');
+	INSERT INTO orderAudit 
+	(orderID, studentID, cardNo, itemType, orderDate, orderTotal, orderStatus, action, actionTime, userID, beforeAfter)
+	VALUES
+	(new.orderID, new.studentID, new.cardNo, new.itemType, new.orderDate, new.orderTotal, new.orderStatus, 'IU', Now(), User(), 'B');
+END; //
+DELIMITER ;
 
 -- payment information of a order
 create table payment (
