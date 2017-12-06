@@ -104,23 +104,32 @@ begin
 	    beforeAfter = "B";
 end;
 
-create trigger auditInsertTrigger
-after insert on orders
-for each row
-begin
-	insert into orderAudit
-	set orderID = old.orderID,
-	    studentID = old.studentID,
-	    cardNo = old.cardNo,
-	    itemType = old.itemType,
-	    orderDate = old.orderDate,
-	    orderTotal = old.orderTotal,
-	    orderStatus = old.orderStatus,
-	    action = "D",
-	    actionTime = now(),
-	    userID = user(),
-	    beforeAfter = "A";
-end;
+CREATE TRIGGER auditinserttrigger after INSERT 
+ON orders 
+FOR EACH row 
+  INSERT INTO orderaudit 
+              (orderid, 
+               studentid, 
+               cardno, 
+               itemtype, 
+               orderdate, 
+               ordertotal, 
+               orderstatus, 
+               action, 
+               actiontime, 
+               userid, 
+               beforeafter) 
+  VALUES     ( new.orderid, 
+               new.studentid, 
+               new.cardno, 
+               new.itemtype, 
+               new.orderdate, 
+               new.ordertotal, 
+               new.orderstatus, 
+               "i", 
+               Now(), 
+               User(), 
+               "a"); 
 
 create trigger auditUpdateTrigger
 after update on orders
