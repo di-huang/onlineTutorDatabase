@@ -1,4 +1,4 @@
--- USE <db_name>
+USE db_dhuang
 
 -- length of strings
 -- names of a person32
@@ -14,7 +14,9 @@ DROP TABLE IF EXISTS student, orders, payment, bookSeller, book, findsSolution, 
 SET FOREIGN_kEY_CHECKS = 1;
 
 -- remove all triggers
--- DROP TRIGGER IF EXISTS orders.auditDeleteTrigger, orders.auditInsertTrigger, orders.auditUpdateTrigger;
+DROP PROCEDURE IF EXISTS auditDeleteTrigger;
+DROP PROCEDURE IF EXISTS auditInsertTrigger;
+DROP PROCEDURE IF EXISTS auditUpdateTrigger;
 
 -- students using Chegg
 create table student (
@@ -103,7 +105,7 @@ BEGIN
 	INSERT INTO orderAudit 
 	(orderID, studentID, cardNo, itemType, orderDate, orderTotal, orderStatus, action, actionTime, userID, beforeAfter)
 	VALUES
-	(new.orderID, new.studentID, new.cardNo, new.itemType, new.orderDate, new.orderTotal, new.orderStatus, 'I', Now(), User(), 'B');
+	(new.orderID, new.studentID, new.cardNo, new.itemType, new.orderDate, new.orderTotal, new.orderStatus, 'I', Now(), User(), 'A');
 END; //
 DELIMITER ;
 
@@ -114,11 +116,11 @@ BEGIN
 	INSERT INTO orderAudit 
 	(orderID, studentID, cardNo, itemType, orderDate, orderTotal, orderStatus, action, actionTime, userID, beforeAfter)
 	VALUES
-	(old.orderID, old.studentID, old.cardNo, old.itemType, old.orderDate, old.orderTotal, old.orderStatus, 'DU', Now(), User(), 'A');
+	(old.orderID, old.studentID, old.cardNo, old.itemType, old.orderDate, old.orderTotal, old.orderStatus, 'U', Now(), User(), 'B');
 	INSERT INTO orderAudit 
 	(orderID, studentID, cardNo, itemType, orderDate, orderTotal, orderStatus, action, actionTime, userID, beforeAfter)
 	VALUES
-	(new.orderID, new.studentID, new.cardNo, new.itemType, new.orderDate, new.orderTotal, new.orderStatus, 'IU', Now(), User(), 'B');
+	(new.orderID, new.studentID, new.cardNo, new.itemType, new.orderDate, new.orderTotal, new.orderStatus, 'U', Now(), User(), 'A');
 END; //
 DELIMITER ;
 
