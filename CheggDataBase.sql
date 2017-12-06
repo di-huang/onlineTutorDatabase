@@ -1,4 +1,4 @@
-USE db_dhuang
+-- USE <dbname>
 
 -- length of strings
 -- names of a person32
