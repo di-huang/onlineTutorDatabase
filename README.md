@@ -26,7 +26,10 @@ High cost of textbooks; students being not able to get extra help for their cour
 - What time intervals are tutors most needed?  
 - What time intervals have excess of students/tutors?  
 - What are the most popular textbooks?  
-- How long should each appointment time last?  
+- How long should each appointment time last?
+- What are the most needed majors?
+- Which testbook generates the most income?
+- Who are the least active tutors in answering questions?
 
 ## Assumptions
 We are assuming that each customer only has one account and no events occuring at the same time. Tutoring is limited to only practical subjects (cannot help with field work, lab procedures and so on). All hired tutors are professional enough to anwser any on-topic question, and one tutro will specialize in only one major. Only students request services (rent/buy textbooks, ask for homework help and so on).
