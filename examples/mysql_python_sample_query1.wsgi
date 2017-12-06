@@ -9,6 +9,9 @@ def application(environ, start_response):
 
     #sqlquery = 'select * from book;'  
     sqlquery = 'SELECT major, count(*) AS questionsSolved FROM ( (SELECT major FROM (SELECT tutorID FROM questionAnsweredBy t1 ) nj1 NATURAL JOIN (SELECT tutorID, major FROM tutor t2 ) nj2 ) UNION ALL (SELECT major FROM (SELECT tutorID FROM expertAnswerGivenBy t3 ) nj3 NATURAL JOIN (SELECT tutorID, major FROM tutor t4 ) nj4 ) UNION ALL (SELECT major FROM (SELECT tutorID FROM textbookSolutionGivenBy t5 ) nj5 NATURAL JOIN (SELECT tutorID, major FROM tutor ) nj6 ) ) u GROUP BY major;'
+    
+    sqlqueryhtml = ' <html>   <body>   <UL style="list-style-type:none">   <LI> SELECT major, count(*) AS questionsSolved   <LI> FROM   <UL style="list-style-type:none">   <LI> (SELECT major   <LI> FROM   <UL style="list-style-type:none">   <LI> (   <UL style="list-style-type:none">   <LI> (SELECT tutorID   <LI> From questionAnsweredBy   <LI> )   <LI> UNION ALL   <LI> (SELECT tutorID   <LI> From textbookSolutionGivenBy   <LI> )   <LI> (SELELCT tutorID   <LI> FROM questionAnsweredBy   </UL>   <LI> ) nj1   <LI> NATURAL JOIN   <LI> (SELECT tutorID, major   <LI> FROM tutor   <LI> ) nj2   </UL>   <LI> ) t1   </UL>   <LI> GROUP BY major   <LI> ;   </UL>   </body>  </html> '
+
     # create a database cursor
     cursor = dbcnx.cursor()
    
@@ -16,7 +19,7 @@ def application(environ, start_response):
     cursor.execute(sqlquery)
     
     output += "<h2> %s </h2>"
-    output %= sqlquery
+    output %= sqlqueryhtml
     output += "<table><tr>"   
 
     # get the number of rows in the resultset

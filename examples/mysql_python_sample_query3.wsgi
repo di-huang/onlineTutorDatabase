@@ -9,6 +9,9 @@ def application(environ, start_response):
 
     #sqlquery = 'select * from book;'  
     sqlquery = 'SELECT tutorID, tutorName, major, questionsAnswered FROM (SELECT tutorID, questionsAnswered FROM (SELECT tutorID, count(tutorID) AS questionsAnswered FROM ( (SELECT tutorID FROM questionAnsweredBy t1 ) UNION ALL (SELECT tutorID FROM expertAnswerGivenBy t2 ) UNION ALL (SELECT tutorID FROM textbookSolutionGivenBy t3 ) ) t4 GROUP BY tutorID ) t5 WHERE (questionsAnswered <= ALL (SELECT count(tutorID) AS questionsAnswered2 FROM ( (SELECT tutorID FROM questionAnsweredBy t6 ) UNION ALL (SELECT tutorID FROM expertAnswerGivenBy t7 ) UNION ALL (SELECT tutorID FROM textbookSolutionGivenBy t8 ) ) t9 GROUP BY tutorID ) ) ) nj1 NATURAL JOIN (SELECT tutorID, tutorName, major FROM tutor t11 ) nj2;'
+
+    sqlqueryhtml = '<html>   <body>   <ul style="list-style-type:none">   <li> SELECT tutorID, tutorName, major, questionsAnswered   <li> FROM   <ul style="list-style-type:none">   <li> (SELECT tutorID, questionsAnswered   <li> FROM   <ul style="list-style-type:none">   <li> (SELECT tutorID, count(tutorID) AS questionsAnswered   <li> FROM   <ul style="list-style-type:none">   <li> (   <ul style="list-style-type:none">   <li> (SELECT tutorID   <li> FROM questionAnsweredBy t1   <li> )   <li> UNION ALL   <li> (SELECT tutorID   <li> FROM expertAnswerGivenBy t2   <li> )   <li> UNION ALL   <li> (SELECT tutorID   <li> FROM textbookSolutionGivenBy t3   <li> )   </ul>   <li> ) t4   </ul>   <li> GROUP BY tutorID   <li> ) t5   </ul>   <li> WHERE   <ul style="list-style-type:none">   <li> (questionsAnswered <= ALL   <ul style="list-style-type:none">   <li> (SELECT count(tutorID) AS questionsAnswered2   <li> FROM   <ul style="list-style-type:none">   <li> (   <ul style="list-style-type:none">   <li> (SELECT tutorID   <li> FROM questionAnsweredBy t6   <li> )   <li> UNION ALL   <li> (SELECT tutorID   <li> FROM expertAnswerGivenBy t7   <li> )   <li> UNION ALL   <li> (SELECT tutorID   <li> FROM textbookSolutionGivenBy t8   <li> )   </ul>   <li> ) t9   </ul>   <li> GROUP BY tutorID   <li> )   </ul>   <li> )   </ul>   <li> ) nj1   <li> NATURAL JOIN   <li> (SELECT tutorID, tutorName, major   <li> FROM tutor t11   <li> ) nj2   </ul>   </ul>   </body>  </html>'  
+    
     # create a database cursor
     cursor = dbcnx.cursor()
    
@@ -16,7 +19,7 @@ def application(environ, start_response):
     cursor.execute(sqlquery)
     
     output += "<h2> %s </h2>"
-    output %= sqlquery
+    output %= sqlqueryhtml
     output += "<table><tr>"   
 
     # get the number of rows in the resultset

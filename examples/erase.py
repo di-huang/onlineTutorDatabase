@@ -12,7 +12,6 @@ def removeSpace(fileName):
     for line in myFile:
         words = splitter.split(line)
         for word in words:
-            print(word)
             strToWrite += word + " "
     myFile.close()
     
@@ -23,5 +22,6 @@ def removeSpace(fileName):
     outFile.write(strToWrite)
     outFile.close()
 
+removeSpace("activityByMajor.html")
 removeSpace("bestSellingBooks.html")
 removeSpace("leastActiveTutors.html")

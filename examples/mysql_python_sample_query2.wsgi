@@ -9,6 +9,9 @@ def application(environ, start_response):
 
     #sqlquery = 'select * from book;'  
     sqlquery = 'SELECT ISBN, bookName, author, copiesSold, averagePrice, totalIncome FROM ( (SELECT ISBN, copiesSold, averagePrice, totalIncome FROM (SELECT ISBN, SUM(quantity) AS copiesSold, AVG(price) AS averagePrice, SUM(total) AS totalIncome FROM (SELECT ISBN, quantity, price, price * quantity AS total FROM suppliedBy WHERE description = "purchase" ) t1 GROUP BY ISBN ) t2 WHERE (totalIncome >= all (SELECT SUM(total) FROM (SELECT ISBN, price * quantity AS total FROM suppliedBy WHERE description = "purchase" ) t3 GROUP BY ISBN ) ) ) nj1 NATURAL JOIN (SELECT ISBN, bookName, author FROM book ) nj2 );'
+    
+    sqlqueryhtml = '<html>   <body>   <ul style="list-style-type:none">   <li> SELECT ISBN, bookName, author, copiesSold, averagePrice, totalIncome   <li> FROM   <li> (   <ul style="list-style-type:none">   <li> (SELECT ISBN, copiesSold, averagePrice, totalIncome   <li> FROM   <ul style="list-style-type:none">   <li> (SELECT ISBN, SUM(quantity) AS copiesSold, AVG(price) AS averagePrice, SUM(total) AS totalIncome   <li> FROM   <ul style="list-style-type:none">   <li> (SELECT ISBN, quantity, price, price * quantity AS total   <li> FROM suppliedBy   <li> WHERE description = "purchase"   <li> ) t1   </ul>   <li> GROUP BY ISBN   <li> ) t2   </ul>   <li> WHERE   <ul style="list-style-type:none">   <li> (totalIncome >= all   <ul style="list-style-type:none">   <li> (SELECT SUM(total)   <li> FROM   <ul style="list-style-type:none">   <li> (SELECT ISBN, price * quantity AS total   <li> FROM suppliedBy   <li> WHERE description = "purchase"   <li> ) t3   </ul>   <li> GROUP BY ISBN   <li> )   </ul>   <li> )   </ul>   <li> ) nj1   <li> NATURAL JOIN   <li> (SELECT ISBN, bookName, author   <li> FROM book   <li> ) nj2   </ul>   <li> )   <li> ;   </ul>     </body>  </html>  '
+
     # create a database cursor
     cursor = dbcnx.cursor()
    
@@ -16,7 +19,7 @@ def application(environ, start_response):
     cursor.execute(sqlquery)
     
     output += "<h2> %s </h2>"
-    output %= sqlquery
+    output %= sqlqueryhtml
     output += "<table><tr>"   
 
     # get the number of rows in the resultset
