@@ -44,7 +44,7 @@ create table tutor (
 	tutorID VARCHAR(16) NOT NULL, 
 	tutorName VARCHAR(32) NOT NULL,
 	tutorLikes Integer NOT NULL,
-	tutorDisLike Integer NOT NULL,
+	tutorDisLikes Integer NOT NULL,
 	idle Boolean NOT NULL,
 	tutorDegree VARCHAR(32),
 	tutorMajor VARCHAR(32),
@@ -135,11 +135,6 @@ create table payment (
 	FOREIGN KEY (studentID) REFERENCES student(studentID) ON DELETE CASCADE
 );
 
--- books purchased within an order
-create table suppliedBy (
-	
-);
-
 -- questions asked by students
 create table question (
 	questionID VARCHAR(16) NOT NULL,
@@ -224,7 +219,7 @@ create table expertAnswerGivenBy (
 
 -- sample data for tutor table
 INSERT INTO tutor 
-(tutorID, tutorName, totalLike, totalDisLike, idle, degree, major)
+(tutorID, tutorName, tutorLikes, tutorDisLikes, idle, tutroDegree, tutorMajor)
 VALUES
 (1111, "Alex", 50, 0, TRUE, "Master", "Math"),
 (2222, "Beth", 40, 0, True, "Master", "English"),
@@ -259,12 +254,12 @@ VALUES
 
 -- sample data for orders
 INSERT INTO orders
-(orderID, studentID, cardNo, itemType, orderDate, orderTotal, orderStatus)
+(orderID, studentID, cardNo, itemType, orderDate, orderTotal, orderStatus, ISBN, quantity, price, description, dueDate, arrivalDate)
 VALUES
-(111, 1001, 1111222233334444, "Head First Java", '2017-11-22 23:10:22', 1, "pending"),
-(222, 1003, 2222333344445555, "Harry Potter and the Sorcerer's Stone", '2018-12-12 11:11:58', 1, "cancelled"),
-(333, 1005, 3333444455556666, "Head First Java", '2019-05-09 13:55:45', 2, "pending"),
-(444, 1007, 4444555566667777, "The Good Samaritan", '2016-06-09 14:45:19', 1, "completed"),
+(111, 1001, 1111222233334444, "Head First Java", '2017-11-22 23:10:22', 1, "pending", "11111", 10, 199, "rental", '2017-10-30 11:11:22', '2017-08-12 23:34:11'),
+(222, 1003, 2222333344445555, "Harry Potter and the Sorcerer's Stone", '2018-12-12 11:11:58', 1, "cancelled", "22222", 20, 12, "rental", '2018-08-18 12:22:10', '2017-05-18 15:22:31'),
+(333, 1005, 3333444455556666, "Head First Java", '2019-05-09 13:55:45', 2, "pending", "33333", 3, 99, "purchase", '2017-07-22 15:33:21', '2017-01-01 01:22:33'),
+(444, 1007, 4444555566667777, "The Good Samaritan", '2016-06-09 14:45:19', 1, "completed", "33333", 3, 99, "purchase", '2017-07-22 15:33:21', '2017-01-01 01:22:33'),
 (555, 1009, 5555666677778888, "Head First Java", '2015-07-18 08:09:08', 1, "completed"),
 (666, 1001, 1111222233334444, "Animal Farm", '2017-11-22 23:10:22', 2, "pending"),
 (777, 1003, 2222333344445555, "Head First Java", '2018-12-12 11:11:58', 2, "cancelled"),
@@ -273,14 +268,14 @@ VALUES
 (1000, 1009, 5555666677778888, "Brave New World", '2015-07-18 08:09:08', 1, "completed");
 
 -- sample data for supplied by
-INSERT INTO suppliedBy
-(sellerID, orderID, ISBN, quantity, price, description, dueDate, arrivalDate)
-VALUES
-(1, 222, "11111", 10, 199, "rental", '2017-10-30 11:11:22', '2017-08-12 23:34:11'),
-(1, 222, "22222", 20, 12, "rental", '2018-08-18 12:22:10', '2017-05-18 15:22:31'),
-(2, 333, "33333", 3, 99, "purchase", '2017-07-22 15:33:21', '2017-01-01 01:22:33'),
-(3, 333, "44444", 18, 123, "purchase", '2016-07-11 12:14:57', '2016-09-23 13:22:41'),
-(4, 555, "55555", 777, 21, "rental", '2015-01-01 12:34:55', '2014-09-09 12:12:12');
+--INSERT INTO suppliedBy
+--(ISBN, quantity, price, description, dueDate, arrivalDate)
+--VALUES
+--,
+--("),
+--("),
+--("44444", 18, 123, "purchase", '2016-07-11 12:14:57', '2016-09-23 13:22:41'),
+--("55555", 777, 21, "rental", '2015-01-01 12:34:55', '2014-09-09 12:12:12');
 
 -- sample data for question
 INSERT INTO question
