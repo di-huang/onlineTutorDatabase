@@ -81,10 +81,13 @@ create table orderAudit (
 	orderDate DATETIME,
 	orderTotal DOUBLE,
 	orderStatus VARCHAR(16),
-	action CHAR(1) NOT NULL,
+	action CHAR(2) NOT NULL,
 	actionTime DATETIME,
 	userID VARCHAR(16),
-	beforeAfter CHAR(1)
+	beforeAfter CHAR(1),
+	PRIMARY KEY (orderID),
+	FOREIGN KEY (orderID) REFERENCES orders(orderID),
+	FOREIGN KEY (studentID) REFERENCES student(studentID)
 );
 
 -- triggers for orders audit table
@@ -116,11 +119,11 @@ BEGIN
 	INSERT INTO orderAudit 
 	(orderID, studentID, cardNo, itemType, orderDate, orderTotal, orderStatus, action, actionTime, userID, beforeAfter)
 	VALUES
-	(old.orderID, old.studentID, old.cardNo, old.itemType, old.orderDate, old.orderTotal, old.orderStatus, 'U', Now(), User(), 'B');
+	(old.orderID, old.studentID, old.cardNo, old.itemType, old.orderDate, old.orderTotal, old.orderStatus, 'UD', Now(), User(), 'A');
 	INSERT INTO orderAudit 
 	(orderID, studentID, cardNo, itemType, orderDate, orderTotal, orderStatus, action, actionTime, userID, beforeAfter)
 	VALUES
-	(new.orderID, new.studentID, new.cardNo, new.itemType, new.orderDate, new.orderTotal, new.orderStatus, 'U', Now(), User(), 'A');
+	(new.orderID, new.studentID, new.cardNo, new.itemType, new.orderDate, new.orderTotal, new.orderStatus, 'UI', Now(), User(), 'A');
 END; //
 DELIMITER ;
 
@@ -173,7 +176,6 @@ create table findsSolution (
 	studentID VARCHAR(16) NOT NULL,
 	questionNo INTEGER NOT NULL,
 	ISBN VARCHAR(13) NOT NULL,
-	foundSolutionDate DATE NOT NULL,
 	PRIMARY KEY (studentID, questionNo),
 	FOREIGN KEY (studentID) REFERENCES student(studentID) ON DELETE CASCADE,
 	FOREIGN KEY (ISBN, questionNo) REFERENCES textbookSolution(ISBN, questionNo) ON DELETE CASCADE
