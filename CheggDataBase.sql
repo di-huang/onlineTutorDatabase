@@ -9,7 +9,7 @@
 -- disable checking foreign keys so we could delete tables conviniently
 SET FOREIGN_KEY_CHECKS = 0; 
 -- remove all tables
-DROP TABLE IF EXISTS student, orders, payment, bookSeller, book, findsSolution, textbookSolution, textbookSolutionGivenBy, question, questionAnsweredBy, expertAnswerReviews, expertAnswerGivenBy, expertAnswer, tutor, suppliedBy, orderAudit;
+DROP TABLE IF EXISTS student, orders, payment, book, findsSolution, textbookSolution, textbookSolutionGivenBy, question, questionAnsweredBy, expertAnswerReviews, expertAnswerGivenBy, expertAnswer, tutor, suppliedBy, orderAudit;
 -- re-enable foreign key checks
 SET FOREIGN_kEY_CHECKS = 1;
 
@@ -40,22 +40,14 @@ create table book (
 	PRIMARY KEY (ISBN)
 );
 
--- information about seller of the book
-create table bookSeller (
-	sellerID VARCHAR(16) NOT NULL, 
-	sellerAddress VARCHAR(64),
-	sellerName VARCHAR(16),
-	PRIMARY KEY (sellerID)
-);
-
 create table tutor (
 	tutorID VARCHAR(16) NOT NULL, 
 	tutorName VARCHAR(32) NOT NULL,
-	totalLike Integer NOT NULL,
-	totalDisLike Integer NOT NULL,
+	tutorLikes Integer NOT NULL,
+	tutorDisLike Integer NOT NULL,
 	idle Boolean NOT NULL,
-	degree VARCHAR(32),
-	major VARCHAR(32),
+	tutorDegree VARCHAR(32),
+	tutorMajor VARCHAR(32),
 	PRIMARY KEY (tutorID)
 );
 
@@ -68,7 +60,13 @@ create table orders (
 	orderDate DATETIME,
 	orderTotal DOUBLE,
 	orderStatus VARCHAR(16),
-	PRIMARY KEY (orderID),
+	ISBN VARCHAR(13), 
+	quantity INTEGER,
+	price DOUBLE,
+	orderDescription VARCHAR(10),
+	dueDate DATETIME,
+	arrivalDate DATETIME,
+	FOREIGN KEY (ISBN) REFERENCES book(ISBN),
 	FOREIGN KEY (studentID) REFERENCES student(studentID)
 );
 
@@ -139,17 +137,7 @@ create table payment (
 
 -- books purchased within an order
 create table suppliedBy (
-	sellerID VARCHAR(16) NOT NULL,
-	orderID VARCHAR(16) NOT NULL,
-	ISBN VARCHAR(13), 
-	quantity INTEGER,
-	price DOUBLE,
-	description VARCHAR(10),
-	dueDate DATETIME,
-	arrivalDate DATETIME,
-	FOREIGN KEY (orderID) REFERENCES orders(orderID),
-	FOREIGN KEY (ISBN) REFERENCES book(ISBN),
-	FOREIGN KEY (sellerID) REFERENCES bookSeller(sellerID) ON DELETE CASCADE
+	
 );
 
 -- questions asked by students
@@ -176,7 +164,7 @@ create table findsSolution (
 	studentID VARCHAR(16) NOT NULL,
 	questionNo INTEGER NOT NULL,
 	ISBN VARCHAR(13) NOT NULL,
-	PRIMARY KEY (studentID, questionNo),
+	PRIMARY KEY (ISBN, questionNo),
 	FOREIGN KEY (studentID) REFERENCES student(studentID) ON DELETE CASCADE,
 	FOREIGN KEY (ISBN, questionNo) REFERENCES textbookSolution(ISBN, questionNo) ON DELETE CASCADE
 ); 
@@ -195,7 +183,7 @@ create table textbookSolutionGivenBy (
 create table questionAnsweredBy (
 	tutorID VARCHAR(16) NOT NULL,
 	questionID VARCHAR(16) NOT NULL,
-	PRIMARY KEY (questionID),
+	PRIMARY KEY (questionID, tutorID),
 	FOREIGN KEY (tutorID) REFERENCES tutor(tutorID) ON DELETE CASCADE,
 	FOREIGN KEY (questionID) REFERENCES question(questionID) ON DELETE CASCADE 
 );
@@ -205,8 +193,8 @@ create table expertAnswer (
 	questionID VARCHAR(16) NOT NULL,
 	tutorID VARCHAR(16) NOT NULL,
 	answerContent VARCHAR(500) NOT NULL,
-	disLikes Integer NOT NULL, 
-	likes Integer NOT NULL,
+	answerDisLikes Integer NOT NULL, 
+	answerLikes Integer NOT NULL,
 	PRIMARY KEY (answerID),
 	FOREIGN KEY (tutorID) REFERENCES tutor(tutorID) ON DELETE CASCADE,
 	FOREIGN KEY (questionID) REFERENCES question(questionID) ON DELETE CASCADE
@@ -229,7 +217,7 @@ create table expertAnswerReviews (
 create table expertAnswerGivenBy (
 	questionID VARCHAR(16) NOT NULL,
 	tutorID VARCHAR(16) NOT NULL,
-	PRIMARY KEY (questionID, tutorId),
+	PRIMARY KEY (questionID, tutorID),
 	FOREIGN KEY (questionID) REFERENCES question(questionID) ON DELETE CASCADE,
 	FOREIGN KEY (tutorID) REFERENCES tutor(tutorID) ON DELETE CASCADE
 );	
@@ -258,16 +246,6 @@ VALUES
 (1008, "s8", "888-888-8888", "888 Eight Road", "8888@eight.com", "yearly", 312),
 (1009, "s9", "999-999-9999", "999 Nine Road", "9999@nine.com", "monthly", 29),
 (1010, "s10", "100-100-1010", "1010 Ten Road", "1010@ten.com", "monthly", 34);
-
--- sample data for seller
-INSERT INTO bookSeller
-(sellerID, sellerAddress, sellerName)
-VALUES
-(1, "seller1 rd", "handsomeSeller"),
-(2, "seller2 rd", "coolSeller"),
-(3, "seller3 rd", "amazingSeller"),
-(4, "seller4 rd", "fantasticSeller"),
-(5, "seller5 rd", "bigSeller");
 
 -- sample data for book
 INSERT INTO book
