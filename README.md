@@ -17,35 +17,37 @@ _Teaching Resource Database_: The database we are building is a simulation of Ch
 
 ## Requirements
 ### The business purpose
-To build a platform for textbook rentals and sales, as well as online tutoring. Tutors are hired and paid hourly. The Revenue of Chegg mainly comes from renting/selling textbooks and membership fees for student to get homework help or tutoring.
+To build a platform for textbook rentals and sales, as well as online tutoring. Revenue orignates from textbook rental/sales and student membership fees.
 ### The problem to be solved
 High cost of textbooks; students being not able to get extra help for their courses.
 ### Questions to be answered
 - What are the most popular subjects?  
 - Who are the most popular tutors?  
-- What time intervals are tutors most needed?  
-- What time intervals have excess of students/tutors?  
 - What are the most popular textbooks?  
-- How long should each appointment time last?
 - What are the most needed majors?
 - Which testbook generates the most income?
 - Who are the least active tutors in answering questions?
 
 ## Assumptions
-We are assuming that each customer only has one account and no events occuring at the same time. Tutoring is limited to only practical subjects (cannot help with field work, lab procedures and so on). All hired tutors are professional enough to anwser any on-topic question, and one tutro will specialize in only one major. Only students request services (rent/buy textbooks, ask for homework help and so on).
+Each customer only has one account. All hired tutors are professional enough to anwser any on-topic question, and one tutor will specialize in only one major. Only students request services (rent/buy textbooks, ask for homework help and so on).
 
 ## Project Scope
 ### In scope
-Tutor & student data, book data, textbook solutions data, question data and subject data. For example, if a student is renting/buying a book, the database will track which book he/she needs, price data and due date of rented books. If a student is requesting a textbook solutions, the database will track which textbook it is and if the student has the membership. 
+Tutor & student data, book data, textbook solutions data, question data and subject data. For example, if a student is renting/buying a book, the database will track which book he/she needs, price data and due date of rented books. If a student is requesting textbook solutions, the database will track which textbook it is and if the student has the membership. 
 ### Out of scope
 All economic and financial data, such as operational costs, revenue and so on; all random and unpredictable situations, such as running status of the server.
 
 ## Design Approach
-- `Tutor`: __tutorName__, degree, majors, ratings, reviews and isWorking.
-- `Student`: __username__, personalInfo, address and credit card info.
-- `Textbook`: __bookID__, book_name, ISBN, author, edition, price and stockAmount.
-- `Request`: __requestID__, date and requestType.
-- `Order`: __orderID__, order history and costs.
+- `Tutor`: __tutorName__, degree, majors, ratings, and reviews.
+- `Student`: __username__, personalInfo and address.
+- `Textbook`: __bookID__, book_name, ISBN, author, edition, price.
+- `order`: __orderID__, order history, costs and relevant information.
+- `book` : __ISBN__, detailed information of book
+- `orderAudit`: audit table for all changes to orders
+- `payment`: __cardNo__, payment information for each order
+- `question`: __questionID__, questions asked by students
+- `textbookSolution`: __questionID__, answers to problems in textbooks
+- `
 
 ## ER Model
 ![alt text](https://github.com/r2dong/DB-Group6/blob/master/documents/ERModel.png)
