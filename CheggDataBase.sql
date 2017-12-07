@@ -9,7 +9,7 @@
 -- disable checking foreign keys so we could delete tables conviniently
 SET FOREIGN_KEY_CHECKS = 0; 
 -- remove all tables
-DROP TABLE IF EXISTS student, orders, payment, book, findsSolution, textbookSolution, textbookSolutionGivenBy, question, questionAnsweredBy, expertAnswerReviews, expertAnswerGivenBy, expertAnswer, tutor, suppliedBy, orderAudit;
+DROP TABLE IF EXISTS student, orders, payment, book, findsSolution, textbookSolution, textbookSolutionGivenBy, question, questionAnsweredBy, expertAnswerReviews, expertAnswerGivenBy, expertAnswer, tutor, orderAudit;
 -- re-enable foreign key checks
 SET FOREIGN_kEY_CHECKS = 1;
 
@@ -61,11 +61,13 @@ create table orders (
 	orderTotal DOUBLE,
 	orderStatus VARCHAR(16),
 	ISBN VARCHAR(13), 
+	description VARCHAR(100),
 	quantity INTEGER,
 	price DOUBLE,
 	orderDescription VARCHAR(10),
 	dueDate DATETIME,
 	arrivalDate DATETIME,
+	PRIMARY KEY (orderID),
 	FOREIGN KEY (ISBN) REFERENCES book(ISBN),
 	FOREIGN KEY (studentID) REFERENCES student(studentID)
 );
@@ -219,7 +221,7 @@ create table expertAnswerGivenBy (
 
 -- sample data for tutor table
 INSERT INTO tutor 
-(tutorID, tutorName, tutorLikes, tutorDisLikes, idle, tutroDegree, tutorMajor)
+(tutorID, tutorName, tutorLikes, tutorDisLikes, idle, tutorDegree, tutorMajor)
 VALUES
 (1111, "Alex", 50, 0, TRUE, "Master", "Math"),
 (2222, "Beth", 40, 0, True, "Master", "English"),
