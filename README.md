@@ -1,3 +1,4 @@
+
 # Project Description
 Group 6: &nbsp; `Donny Dong` &nbsp; `Dat Hong` &nbsp; `Di Huang`
 
@@ -54,4 +55,5 @@ All economic and financial data, such as operational costs, revenue and so on; a
 
 ## ER Model
 ![alt text](https://github.com/r2dong/onlineTutorDatabase/Design/ERModel(by_drawio).xml)
+https://www.draw.io/#Hr2dong%2FonlineTutorDatabase%2Fmaster%2FDesign%2FERModel(by_drawio).xml
 
