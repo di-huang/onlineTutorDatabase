@@ -54,5 +54,5 @@ All economic and financial data, such as operational costs, revenue and so on; a
 - `orderAudit`: __orderID__, keeps a log of orders
 
 ## ER Model at Following Link
-https://www.draw.io/#Hr2dong%2FonlineTutorDatabase%2Fmaster%2FDesign%2FERModel(by_drawio).xml
+![alt text](Design/ERModel(by_drawio).png)
 
