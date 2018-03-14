@@ -53,6 +53,6 @@ All economic and financial data, such as operational costs, revenue and so on; a
 - `textbookSolution`: __questionID__, answers to problems in textbooks
 - `orderAudit`: __orderID__, keeps a log of orders
 
-## ER Model at Following Link
+## ER Model
 ![alt text](Design/ERModel(by_drawio).png)
 
